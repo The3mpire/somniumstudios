@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Template.unity
+- path: Assets/Scenes/Chris-Scene.unity
   isLoaded: 1
   isActive: 1
