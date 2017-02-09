@@ -6,15 +6,11 @@ namespace Somnium
     /// <summary>
     /// This class is responsible giving a gameobject movement abilities.
     /// </summary>
-    [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
     public class CharacterMovement : MonoBehaviour
     {
-        //Character controllers only react to physics if moved. 
-        //An OnCollision method would need to be implemented of physics acting upon this gameobject is desired.
-        private CharacterController cController;
-
         //Rigidbodies always react to physics.
-        //private Rigidbody2D rigidBody;
+        private Rigidbody2D rigidBody;
 
         /// <summary>
         /// Collision avoidance settings for gameobject.
@@ -36,7 +32,7 @@ namespace Somnium
         /// Speed of the gameobject 
         /// </summary>
         [SerializeField]
-        private float speed = 1f;
+        private float speed = 5f;
 
         /// <summary>
         /// Speed of the gameobject 
@@ -58,8 +54,7 @@ namespace Somnium
 
         void Start()
         {
-            this.cController = gameObject.GetComponent<CharacterController>();
-            //this.rigidBody = GetComponent<Rigidbody2D>();
+            this.rigidBody = GetComponent<Rigidbody2D>();
         }
 
         /// <summary>
@@ -81,9 +76,7 @@ namespace Somnium
             direction = direction.normalized;
 
             Vector2 vel = direction * speed;
-            //rigidBody.MovePosition(rigidBody.position + (vel * Time.deltaTime));
-            cController.Move(vel * Time.deltaTime);
+            rigidBody.MovePosition(rigidBody.position + (vel * Time.deltaTime));
         }
     }
-
 }

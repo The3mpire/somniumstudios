@@ -1,45 +1,27 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Somnium
 {
-    public class PlayerCharacter : MovingCharacter
+
+    public sealed class Interactor : MonoBehaviour
     {
         /// <summary>
-        /// Minimum distance of interaction.
+        /// Minimum interaction distance
         /// </summary>
         [SerializeField]
-        private float interactDistance;
+        private float interactDistance = 5f;
 
         /// <summary>
-        /// Interactable layers.
+        /// Layers that this object can interact with.
         /// </summary>
         [SerializeField]
         private LayerMask interactableLayer;
 
         /// <summary>
-        /// Last direction
+        /// Interacts with the object in the specified direction if it is close enough and on the interactable layers.
         /// </summary>
-        private Vector2 savedDirection;
-
-        protected override void Update()
-        {
-            Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-            savedDirection = input == Vector2.zero ? savedDirection : input;
-            Move(input);
-
-            if (Input.GetButtonDown("Interact"))
-            {
-                Interact(savedDirection);
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="inDirection"></param>
         public void Interact(Vector3 inDirection)
         {
             inDirection = inDirection.normalized;
