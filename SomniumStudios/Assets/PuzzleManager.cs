@@ -33,8 +33,6 @@ public class PuzzleManager : MonoBehaviour {
         }
     }
 
-    
-
     /// <summary>
     /// Return the layer counter and increment
     /// </summary>
