@@ -16,6 +16,7 @@ public class PuzzleManager : MonoBehaviour {
 
     [SerializeField]
     private static int layerCounter;
+    
 
     // Use this for initialization
     void Awake() {
@@ -26,12 +27,6 @@ public class PuzzleManager : MonoBehaviour {
             Destroy(gameObject);
     }
 
-    // Update is called once per frame
-    void Update() {
-        if(pieceCount == piecesPlaced) {
-            GameManager.ChangeScene();
-        }
-    }
 
     /// <summary>
     /// Return the layer counter and increment
@@ -43,6 +38,10 @@ public class PuzzleManager : MonoBehaviour {
 
     public static void incrementPiecesPlaced() {
         piecesPlaced++;
+
+        if(piecesPlaced == pieceCount) {
+            GameManager.ChangeScene();
+        }
     }
 
 }

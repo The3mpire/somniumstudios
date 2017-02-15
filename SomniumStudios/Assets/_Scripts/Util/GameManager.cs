@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager instance = null;
     [Tooltip("Screen fader controller")]
-    public static GameObject fade = new GameObject();
+    public GameObject fade;
 
 
     void Awake() {
@@ -19,17 +19,27 @@ public class GameManager : MonoBehaviour {
         }
 
         DontDestroyOnLoad(gameObject);
-
-        //TODO don't look at me T_T
-        fade = GameObject.Find("Fade");
     }
 
     public static void ChangeScene() {
-        fade.GetComponent<ScreenFader>().fadeIn = false;
-        //TODO make this not hardcoded
+        instance.fade.GetComponent<ScreenFader>().fadeIn = false;
 
-        SceneManager.LoadScene(0);
+        // coroutine before change scene
+        instance.StartCoroutine("FadeTime");
+        
     }
+
+    private IEnumerator FadeTime() {
+        yield return new WaitForSeconds(instance.fade.GetComponent<ScreenFader>().fadeTime);
+
+        //TODO make this not hardcoded
+        SceneManager.LoadSceneAsync(0);
+    }
+
+    void OnLevelWasLoaded() {
+        instance.fade.GetComponent<ScreenFader>().fadeIn = true;
+    }
+
 
     // Use this for initialization
     void Start () {

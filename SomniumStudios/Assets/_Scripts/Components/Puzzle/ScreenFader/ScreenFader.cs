@@ -12,10 +12,26 @@ public class ScreenFader : MonoBehaviour
     public float fadeTime = 2.0f;
     public Color fadeColor = new Color(0.0f, 0.0f, 0.0f, 1.0f);
     public Material fadeMaterial = null;
+
+    public static ScreenFader instance = null;
     
     private bool faded = false;
     private bool lastFadeIn = false;
     private List<ScreenFadeControl> fadeControls = new List<ScreenFadeControl>();
+
+
+    void Awake() {
+
+        if (instance == null) {
+            instance = this;
+        }
+        else if (instance != this) {
+            Destroy(gameObject);
+        }
+
+        DontDestroyOnLoad(gameObject);
+    }
+
 
     void SetFadersEnabled(bool value)
     {
