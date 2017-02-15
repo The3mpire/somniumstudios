@@ -21,19 +21,18 @@ public class GameManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
     }
 
-    public static void ChangeScene() {
+    public static void ChangeScene(int levelIndex) {
         instance.fade.GetComponent<ScreenFader>().fadeIn = false;
 
         // coroutine before change scene
-        instance.StartCoroutine("FadeTime");
-        
+        IEnumerator coroutine = instance.FadeTime(levelIndex);
+        instance.StartCoroutine(coroutine);
     }
 
-    private IEnumerator FadeTime() {
+    private IEnumerator FadeTime(int levelIndex) {
         yield return new WaitForSeconds(instance.fade.GetComponent<ScreenFader>().fadeTime);
-
-        //TODO make this not hardcoded
-        SceneManager.LoadSceneAsync(0);
+     
+        SceneManager.LoadSceneAsync(levelIndex);
     }
 
     void OnLevelWasLoaded() {

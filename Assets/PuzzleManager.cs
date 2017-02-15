@@ -35,12 +35,14 @@ public class PuzzleManager : MonoBehaviour {
     public static int getLayerCounter() {
         return ++layerCounter;
     }
+    
 
     public static void incrementPiecesPlaced() {
         piecesPlaced++;
 
         if(piecesPlaced == pieceCount) {
-            GameManager.ChangeScene();
+            //TODO make not hardcoded
+            GameManager.ChangeScene(0);
         }
     }
 
