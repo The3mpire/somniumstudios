@@ -8,7 +8,9 @@ public class Draggable : MonoBehaviour {
     private Vector3 screenPoint;
     //private Vector3 offset;
     public bool isDraggable = true;
+    public bool hasInterruptor = false;
     public GameObject receptacle;
+    public GameObject interruptor;
 
     //TODO put in puzzle manager
     private int layerCount = 0;
@@ -36,7 +38,12 @@ public class Draggable : MonoBehaviour {
 
     void OnMouseUp() {
         if (receptacle.GetComponent<BoxCollider2D>().bounds.Contains(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z)))) {
-            Snap();
+            if (hasInterruptor) {
+                if (interruptor.GetComponent<Interruptor>().getLight())
+                    Snap();
+            }
+            else
+                Snap();
         }
         Cursor.visible = true;
     }
@@ -44,13 +51,16 @@ public class Draggable : MonoBehaviour {
     void Snap() {
         Transform parentLocation = receptacle.transform;
 
-        receptacle.GetComponent<SpriteRenderer>().color = Color.gray;
+        //receptacle.GetComponent<SpriteRenderer>().color = Color.gray;
 
         transform.position = parentLocation.position;
 
         GetComponent<SpriteRenderer>().sortingOrder = -1;
 
         isDraggable = false;
+
+        if (hasInterruptor)
+            interruptor.GetComponent<Interruptor>().setClickable(false);
 
         GetComponent<BoxCollider2D>().enabled = false;
         receptacle.GetComponent<BoxCollider2D>().enabled = false;

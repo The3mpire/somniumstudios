@@ -7,7 +7,7 @@ public class PuzzleManager : MonoBehaviour {
     [Tooltip("don't touch this")]
     public static PuzzleManager instance = null;
     [Tooltip("How many pieces this puzzle has")]
-    public static int pieceCount = 2;
+    public int pieceCount = 2;
     [Tooltip("Screen fader controller")]
     public ScreenFader fade;
 
@@ -40,7 +40,7 @@ public class PuzzleManager : MonoBehaviour {
     public static void incrementPiecesPlaced() {
         piecesPlaced++;
 
-        if(piecesPlaced == pieceCount) {
+        if(piecesPlaced == instance.pieceCount) {
             //TODO make not hardcoded
             GameManager.ChangeScene(0);
         }
