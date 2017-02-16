@@ -25,6 +25,8 @@ public class PuzzleManager : MonoBehaviour {
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
+
+        piecesPlaced = 0;
     }
 
 
