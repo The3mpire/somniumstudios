@@ -5,7 +5,7 @@ namespace Somnium
     [RequireComponent(typeof(CharacterMovement), typeof(Interactor))]
     public sealed class PlayerController : MonoBehaviour
     {
-        private Vector2 savedDirection;
+        private Vector3 savedDirection;
 
         private CharacterMovement cm;
 
@@ -19,8 +19,8 @@ namespace Somnium
 
         void Update()
         {
-            Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-            savedDirection = input == Vector2.zero ? savedDirection : input;
+            Vector3 input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            savedDirection = input == Vector3.zero ? savedDirection : input;
 
             cm.Move(input);
 

@@ -8,6 +8,11 @@ namespace Somnium
     [RequireComponent(typeof(Camera))]
     public sealed class CameraFollow : MonoBehaviour
     {
+
+        [Tooltip("How far above the player the camera will be")]
+        [SerializeField]
+        private int verticalOffset;
+
         /// <summary>
         /// The target GameObject to follow.
         /// </summary>
@@ -49,7 +54,7 @@ namespace Somnium
         {
             if (target != null)
             {
-                Vector3 destination = new Vector3(target.transform.position.x, target.transform.position.y, transform.position.z);
+                Vector3 destination = new Vector3(target.transform.position.x, target.transform.position.y + verticalOffset, transform.position.z);
                 transform.position = smoothFollow ? Vector3.SmoothDamp(transform.position, destination, ref followVelocity, followTime) : destination;
 
             }
