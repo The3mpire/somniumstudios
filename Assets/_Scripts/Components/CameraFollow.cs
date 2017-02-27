@@ -11,7 +11,7 @@ namespace Somnium
 
         [Tooltip("How far above the player the camera will be")]
         [SerializeField]
-        private int verticalOffset;
+        private float verticalOffset;
 
         /// <summary>
         /// The target GameObject to follow.
