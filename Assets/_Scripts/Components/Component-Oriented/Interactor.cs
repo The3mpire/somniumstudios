@@ -25,9 +25,10 @@ namespace Somnium
         public void Interact(Vector3 inDirection)
         {
             inDirection = inDirection.normalized;
-            RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position, inDirection, interactDistance, interactableLayer);
+
+            RaycastHit hit;
             Debug.DrawRay(transform.position, inDirection, Color.green);
-            if (hit)
+            if (Physics.Raycast(gameObject.transform.position, inDirection, out hit, interactDistance, interactableLayer))
             {
                 IInteractable inter = hit.collider.gameObject.GetComponent<IInteractable>();
                 if (inter != null)
