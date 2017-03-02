@@ -91,6 +91,47 @@ NavMeshSettings:
     cellSize: 0.16666667
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &16805127
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 16805129}
+  - component: {fileID: 16805128}
+  m_Layer: 0
+  m_Name: PoliceStationDoor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &16805128
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 16805127}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.26, y: 0.5, z: 0.16}
+  m_Center: {x: 0.09, y: -0.24, z: -0.58}
+--- !u!4 &16805129
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 16805127}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -20.986, y: 3.62, z: -0.02}
+  m_LocalScale: {x: 7.4030037, y: 7.4030094, z: 2.116948}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &100208694
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,7 +293,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 267244516}
   m_LocalRotation: {x: 0.70710707, y: -0, z: -0, w: 0.70710653}
-  m_LocalPosition: {x: -14.261, y: 15.2, z: 2.68}
+  m_LocalPosition: {x: -2.62, y: 4.93, z: 2.68}
   m_LocalScale: {x: 6.797404, y: 3.5540826, z: 6.7974176}
   m_Children: []
   m_Father: {fileID: 0}
@@ -332,7 +373,7 @@ GameObject:
   - component: {fileID: 643286564}
   - component: {fileID: 643286563}
   - component: {fileID: 643286562}
-  - component: {fileID: 643286566}
+  - component: {fileID: 643286567}
   m_Layer: 11
   m_Name: PoliceStationPlaceHolder
   m_TagString: Untagged
@@ -403,18 +444,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &643286566
-BoxCollider:
+--- !u!114 &643286567
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 643286561}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.26, y: 0.5, z: 0.16}
-  m_Center: {x: 0.09, y: -0.24, z: -0.58}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c5c0711a2072ad4fbeb6384f6e172bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &807289442
 GameObject:
   m_ObjectHideFlags: 0
@@ -492,7 +532,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 807289442}
   m_LocalRotation: {x: 0.7071067, y: -0, z: -0, w: 0.7071069}
-  m_LocalPosition: {x: -7.93, y: 0, z: 0.20000003}
+  m_LocalPosition: {x: -7.93, y: 0, z: 0.2}
   m_LocalScale: {x: 47.122257, y: 32.102448, z: 32.102448}
   m_Children: []
   m_Father: {fileID: 0}
@@ -583,7 +623,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c57f76d6732bf494eac248a53e5cb85e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDistance: 5
+  interactDistance: 10
   interactableLayer:
     serializedVersion: 2
     m_Bits: 2048
