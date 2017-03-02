@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<dialogArray>
+  <dialog id="0" type="choice">
+    <text>
+      This is test 0.
+    </text>
+    <choices>
+      <choice index="0" returnType="bool" val="true">
+        yes 0.
+      </choice>
+      <choice index="1" returnType="bool" val="false">
+        no 0.
+      </choice>
+    </choices>
+  </dialog>
+  <dialog id="1" type="normal">
+    <text>
+      This is test 2.
+    </text>
+  </dialog>
+</dialogArray>
