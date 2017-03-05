@@ -74,6 +74,13 @@ namespace Somnium
         private string nextButtonName;
 
         /// <summary>
+        /// When a choice is selected through the use of the DialogManager, 
+        /// subscribers will be notified of the index of that choice, and the
+        /// value that the choice contained.
+        /// </summary>
+        public event Action<int, object> ChoiceSelectedEvent;
+
+        /// <summary>
         /// Allows access to the dialog panel's sprite profile image.
         /// </summary>
         public Sprite ProfileSprite
@@ -194,7 +201,11 @@ namespace Somnium
                 Choice choice = choices[i];
                 b.onClick.AddListener(()=> {
                     choiceSelected = true;
-                    HandleChoiceSelectedEvent(choice);
+                    if (ChoiceSelectedEvent != null)
+                    {
+                        ChoiceSelectedEvent(j, choice.Value);
+                    }
+                    ChoiceSelectionListener(choice);
                 });
                 Rect r = b.GetComponent<RectTransform>().rect;
                 buttonPosition = new Vector2(0, buttonPosition.y - r.height);
@@ -204,7 +215,7 @@ namespace Somnium
             yield return new WaitForEndOfFrame();
         }
 
-        private void HandleChoiceSelectedEvent(Choice c)
+        private void ChoiceSelectionListener(Choice c)
         {
             Dialog d = c.NextDialog;
             if (d != null)
