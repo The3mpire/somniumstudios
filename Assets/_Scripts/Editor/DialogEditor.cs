@@ -65,7 +65,7 @@ namespace Somnium
 
     internal sealed class EditorModel
     {
-        DialogManager.Dialog rootDialog;
+        //DialogManager.Dialog rootDialog;
 
 
     }

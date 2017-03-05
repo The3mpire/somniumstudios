@@ -4,24 +4,91 @@ using UnityEngine.UI;
 using System.IO;
 using System;
 using Newtonsoft.Json;
+using System.Collections;
 
 namespace Somnium
 {
     public class DialogManager : MonoBehaviour
     {
+
+#region Member Vars
+
+        /// <summary>
+        /// The instance of the dialog manager, singleton pattern.
+        /// </summary>
         private static DialogManager instance;
+
+        //private Dialog currentDialog;
+
+        /// <summary>
+        /// Whether or not the manager is currently running a DisplayDialog routine.
+        /// Used for handling the scheduling of displaying other dialogs.
+        /// </summary>
+        private bool runningDisplayRoutine;
 
         [SerializeField]
         [Tooltip("The canvas containing the dialog canvas.")]
         private Canvas dialogCanvas;
 
         [SerializeField]
-        [Tooltip("The profile image of the character speaking.")]
-        private Image profileImage;
+        private DialogSettings dialogSettings;
 
         [SerializeField]
-        [Tooltip("The text box containing speech text.")]
-        private Text textBox;
+        private ChoiceSettings choiceSettings;
+
+        [Serializable]
+        private struct DialogSettings
+        {
+            [Tooltip("Panel that contains dialog elements.")]
+            public RectTransform dialogPanel;
+
+            [Tooltip("The text box containing speech text.")]
+            public Text textBox;
+
+            [Tooltip("UI image panel used for displaying profile sprites.")]
+            public Image profileImage;
+
+            [Tooltip("Max amount of chars to display in textbox at a single time.")]
+            [Range(1,512)]
+            public int charsPerBox;
+
+            [Tooltip("Rate at which characters appear in the textbox")]
+            [Range(1,60)]
+            public float charRate;
+        }
+
+        [Serializable]
+        private struct ChoiceSettings
+        {
+            [Tooltip("Panel that contains choice elements.")]
+            public RectTransform choicePanel;
+
+            [Tooltip("Prefab to use when instantiating buttons for choice selection.")]
+            public Button choiceButtonPrefab;
+
+            [Tooltip("Initial position within the choicePanel that a choice button should start at")]
+            public Vector2 initPosition;
+        }
+
+        [SerializeField]
+        private string nextButtonName;
+
+        /// <summary>
+        /// Allows access to the dialog panel's sprite profile image.
+        /// </summary>
+        public Sprite ProfileSprite
+        {
+            get
+            {
+                return dialogSettings.profileImage.sprite;
+            }
+            set
+            {
+                dialogSettings.profileImage.sprite = value;
+            }
+        }
+
+#endregion
 
         void Awake()
         {
@@ -33,14 +100,129 @@ namespace Somnium
             {
                 Destroy(gameObject);
             }
-
             DontDestroyOnLoad(gameObject);
+            dialogCanvas.enabled = false;
+        }
+
+        private void Start()
+        {
+            StartDialog("Assets/Resources/DialogFiles/TestDialog.json");
+            //StartDialogAt("Assets/Resources/DialogFiles/TestDialog.json", 2);
+        }
+
+        /// <summary>
+        /// Starts a dialog interaction using dialog data in the specified file starting at the dialog with the given dialog ID.
+        /// </summary>
+        /// <param name="dialogFilePath">Path to the specially formatted json dialog file.</param>
+        /// <param name="dialogId">Id of the dialog that the interaction should start at.</param>
+        public void StartDialogAt(string dialogFilePath, int dialogId)
+        {
+            Dialog d = LoadDialogFile(dialogFilePath);
+            Dialog search = DialogGraph.BreadthFirst(d, (n) => { return n.Id == dialogId; });
+            if (search == null)
+            {
+                Debug.LogError("Could not find Dialog with ID of: " + dialogId);
+            } else
+            {
+                StartCoroutine(ScheduleNextDialog(search));
+            }
+        }
+
+        /// <summary>
+        /// Starts a dialog interaction using dialog data in the specified file starting at the root dialog object.
+        /// </summary>
+        /// <param name="dialogFilePath">Path to the specially formatted json dialog file.</param>
+        public void StartDialog(string dialogFilePath)
+        {
+            Dialog d = LoadDialogFile(dialogFilePath);
+            StartCoroutine(ScheduleNextDialog(d));
+        }
+
+        private void StartDialog(Dialog dialog)
+        {
+            StartCoroutine(DisplayDialog(dialog, dialogSettings, choiceSettings));
+        }
+
+        IEnumerator DisplayDialog(Dialog d, DialogSettings dialogSettings, ChoiceSettings choiceSettings)
+        {
+            runningDisplayRoutine = true;
+            dialogCanvas.enabled = true;
+            yield return StartCoroutine(DisplayText(d.DialogText, dialogSettings));
+            if (d.Choices != null && d.Choices.Count > 0)
+            {
+                yield return StartCoroutine(DisplayChoices(d.Choices, choiceSettings));
+            } 
+            dialogCanvas.enabled = false;
+            runningDisplayRoutine = false;
+        }
+
+        IEnumerator DisplayText(string text, DialogSettings dialogSettings)
+        {
+            dialogSettings.dialogPanel.gameObject.SetActive(true);
+            int i = 0;
+            dialogSettings.textBox.text = "";
+            foreach(char c in text)
+            {
+                if (i > dialogSettings.charsPerBox)
+                {
+                    yield return new WaitUntil(() => Input.GetButtonDown(nextButtonName));
+                    dialogSettings.textBox.text = "";
+                    i = 0;
+                }
+                dialogSettings.textBox.text += c;
+                i++;
+                yield return new WaitForSeconds(1/dialogSettings.charRate);
+            }
+            yield return new WaitUntil(() => Input.GetButtonDown(nextButtonName));
+            dialogSettings.dialogPanel.gameObject.SetActive(false);
+            yield return new WaitForEndOfFrame();
+        }
+
+        IEnumerator DisplayChoices(List<Choice> choices, ChoiceSettings choiceSettings)
+        {
+            choiceSettings.choicePanel.gameObject.SetActive(true);
+            Vector2 buttonPosition = choiceSettings.initPosition;
+            bool choiceSelected = false;
+            for(int i = 0; i < choices.Count; i++)
+            {
+                Choice c = choices[i];
+                //Inefficient, should be object pooling at creation time of DialogManager, oh well.
+                Button b = Instantiate(choiceSettings.choiceButtonPrefab, choiceSettings.choicePanel.transform, false);
+                b.GetComponentInChildren<Text>().text = c.Text;
+                b.GetComponent<RectTransform>().localPosition = buttonPosition;
+                int j = i;
+                Choice choice = choices[i];
+                b.onClick.AddListener(()=> {
+                    choiceSelected = true;
+                    HandleChoiceSelectedEvent(choice);
+                });
+                Rect r = b.GetComponent<RectTransform>().rect;
+                buttonPosition = new Vector2(0, buttonPosition.y - r.height);
+            }
+            yield return new WaitUntil(() => { return choiceSelected; });
+            choiceSettings.choicePanel.gameObject.SetActive(false);
+            yield return new WaitForEndOfFrame();
+        }
+
+        private void HandleChoiceSelectedEvent(Choice c)
+        {
+            Dialog d = c.NextDialog;
+            if (d != null)
+            {
+                StartCoroutine(ScheduleNextDialog(d));
+            }
+        }
+
+        IEnumerator ScheduleNextDialog(Dialog d)
+        {
+            yield return new WaitWhile(() => { return runningDisplayRoutine; });
+            StartDialog(d);
         }
 
         /// <summary>
         /// Reads in a dialog file and returns a root Dialog Node.
         /// </summary>
-        public static Dialog LoadDialog(string path)
+        static Dialog LoadDialogFile(string path)
         {
             if (File.Exists(path))
             {
@@ -55,16 +237,15 @@ namespace Somnium
             }
         }
 
-        public static void SaveDialog(string path, Dialog data)
+        static void SaveDialogToFile(string path, Dialog data)
         {
             string json = JsonConvert.SerializeObject(data);
             File.WriteAllText(path, json);
         }
 
-        public sealed class DialogGraph
+        sealed class DialogGraph
         {
-
-            public Dialog DepthFirst(Dialog root, Func<Dialog, bool> comparer)
+            public static Dialog DepthFirst(Dialog root, Func<Dialog, bool> comparer)
             {
                 Stack<Dialog> stack = new Stack<Dialog>();
                 HashSet<Dialog> visited = new HashSet<Dialog>();
@@ -89,7 +270,7 @@ namespace Somnium
                 return null;
             }
 
-            public Dialog BreadthFirst(Dialog root, Func<Dialog, bool> comparer)
+            public static Dialog BreadthFirst(Dialog root, Func<Dialog, bool> comparer)
             {
                 Queue<Dialog> queue = new Queue<Dialog>();
                 HashSet<Dialog> visited = new HashSet<Dialog>();
@@ -115,23 +296,17 @@ namespace Somnium
             }
         }
 
-        public sealed class Dialog : IComparable<int>
+        sealed class Dialog : IComparable<int>
         {
             public int Id { get; set; }
             public string DialogText { get; set; }
-            public string DialogType { get; set; }
 
             public List<Choice> Choices { get; private set; }
 
-            public Dialog(string text, string type) : this(text, type, new Choice[0])
+            public Dialog(int id, string text, Choice[] choices)
             {
-
-            }
-
-            public Dialog(string text, string type, Choice[] choices)
-            {
+                this.Id = id;
                 this.DialogText = text;
-                this.DialogType = type;
                 this.Choices = new List<Choice>(choices);
             }
 
@@ -141,17 +316,11 @@ namespace Somnium
             }
         }
 
-        public sealed class Choice
+        sealed class Choice
         {
-            public Dialog Parent { get; private set; }
             public string Text { get; set; }
             public object Value { get; set; }
             public Dialog NextDialog { get; set; }
-
-            public Choice(string text, object value) : this(text, value, null)
-            {
-
-            }
 
             public Choice(string text, object value, Dialog nextDialog)
             {
