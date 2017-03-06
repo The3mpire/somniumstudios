@@ -16,7 +16,7 @@ namespace Somnium
         /// <summary>
         /// The instance of the dialog manager, singleton pattern.
         /// </summary>
-        private static DialogManager instance;
+        public static DialogManager Instance { get; private set; }
 
         //private Dialog currentDialog;
 
@@ -99,11 +99,11 @@ namespace Somnium
 
         void Awake()
         {
-            if (instance == null)
+            if (Instance == null)
             {
-                instance = this;
+                Instance = this;
             }
-            else if (instance != this)
+            else if (Instance != this)
             {
                 Destroy(gameObject);
             }
@@ -113,7 +113,8 @@ namespace Somnium
 
         private void Start()
         {
-            StartDialog("Assets/Resources/DialogFiles/TestDialog.json");
+            //StartDialog("DialogFiles/TestDialog");
+            //StartDialog("Assets/Resources/DialogFiles/TestDialog.json");
             //StartDialogAt("Assets/Resources/DialogFiles/TestDialog.json", 2);
         }
 
@@ -124,14 +125,18 @@ namespace Somnium
         /// <param name="dialogId">Id of the dialog that the interaction should start at.</param>
         public void StartDialogAt(string dialogFilePath, int dialogId)
         {
-            Dialog d = LoadDialogFile(dialogFilePath);
-            Dialog search = DialogGraph.BreadthFirst(d, (n) => { return n.Id == dialogId; });
-            if (search == null)
+            if (!runningDisplayRoutine)
             {
-                Debug.LogError("Could not find Dialog with ID of: " + dialogId);
-            } else
-            {
-                StartCoroutine(ScheduleNextDialog(search));
+                Dialog d = LoadDialogFile(dialogFilePath);
+                Dialog search = DialogGraph.BreadthFirst(d, (n) => { return n.Id == dialogId; });
+                if (search == null)
+                {
+                    Debug.LogError("Could not find Dialog with ID of: " + dialogId);
+                }
+                else
+                {
+                    StartCoroutine(ScheduleNextDialog(search));
+                }
             }
         }
 
@@ -141,8 +146,11 @@ namespace Somnium
         /// <param name="dialogFilePath">Path to the specially formatted json dialog file.</param>
         public void StartDialog(string dialogFilePath)
         {
-            Dialog d = LoadDialogFile(dialogFilePath);
-            StartCoroutine(ScheduleNextDialog(d));
+            if (!runningDisplayRoutine)
+            {
+                Dialog d = LoadDialogFile(dialogFilePath);
+                StartCoroutine(ScheduleNextDialog(d));
+            }
         }
 
         private void StartDialog(Dialog dialog)
@@ -235,6 +243,10 @@ namespace Somnium
         /// </summary>
         static Dialog LoadDialogFile(string path)
         {
+            TextAsset json = Resources.Load<TextAsset>(path);
+            Dialog root = JsonConvert.DeserializeObject<Dialog>(json.text);
+            return root;
+            /*
             if (File.Exists(path))
             {
                 string json = File.ReadAllText(path);
@@ -246,6 +258,7 @@ namespace Somnium
                 Debug.LogError("File at path: " + path + " does not exist.");
                 return null;
             }
+            */
         }
 
         static void SaveDialogToFile(string path, Dialog data)

@@ -27,7 +27,7 @@ namespace Somnium
             inDirection = inDirection.normalized;
 
             RaycastHit hit;
-            Debug.DrawRay(transform.position, inDirection, Color.green);
+            Debug.DrawRay(transform.position, inDirection * interactDistance, Color.blue, .5f);
             if (Physics.Raycast(gameObject.transform.position, inDirection, out hit, interactDistance, interactableLayer))
             {
                 IInteractable inter = hit.collider.gameObject.GetComponent<IInteractable>();
