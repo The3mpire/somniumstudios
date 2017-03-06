@@ -21,6 +21,18 @@ public class GameManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
     }
 
+    // Use this for initialization
+    void Start() {
+
+    }
+
+    // Update is called once per frame
+    void Update() {
+    }
+
+
+    #region Level/Scene Methods
+
     public static void ChangeScene(int levelIndex) {
         instance.fade.GetComponent<ScreenFader>().fadeIn = false;
 
@@ -39,16 +51,60 @@ public class GameManager : MonoBehaviour {
         instance.fade.GetComponent<ScreenFader>().fadeIn = true;
     }
 
+    /// <summary>
+    /// Restart from most recent checkpoint/levelLoad
+    /// </summary>
+    public void RestartLevel() {
+        Cursor.visible = false;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 
-    // Use this for initialization
-    void Start () {
-        
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        if(Input.GetKeyDown(KeyCode.Escape)){
-            Application.Quit();
-        }
-	}
+
+    /// <summary>
+    /// Start the entire game over
+    /// </summary>
+    public void RestartGame() {
+        Cursor.visible = false;
+        SceneManager.LoadScene(0);
+    }
+
+    /// <summary>
+    /// Continue from where you left off
+    /// </summary>
+    public void ContinueGame() {
+        Cursor.visible = false;
+        SceneManager.LoadScene(PlayerPrefs.GetInt("level"));
+    }
+
+    /// <summary>
+    /// Go back to main menu
+    /// </summary>
+    public void ExitLevel() {
+        Cursor.visible = false;
+        SceneManager.LoadScene(0);
+    }
+
+    /// <summary>
+    /// Start a brand new game
+    /// </summary>
+    public void NewGame() {
+        PlayerPrefs.SetInt("points", 0);
+        PlayerPrefs.SetInt("level", 0);
+        Cursor.visible = false;
+        SceneManager.LoadScene(1);
+    }
+
+    //private IEnumerator menuWait(float time)
+    // {
+    //     yield return new WaitForSeconds(time);
+
+    // }
+
+    /// <summary>
+    /// Exit the entire application
+    /// </summary>
+    public void ExitGame() {
+        Application.Quit();
+    }
+    #endregion
 }
