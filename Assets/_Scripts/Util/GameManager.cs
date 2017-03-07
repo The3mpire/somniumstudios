@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour {
 
@@ -78,6 +79,7 @@ public class GameManager : MonoBehaviour {
     /// </summary>
     public static void ExitLevel() {
         Cursor.visible = false;
+        EventSystem.current.SetSelectedGameObject(null);
         ChangeScene(0);
     }
 

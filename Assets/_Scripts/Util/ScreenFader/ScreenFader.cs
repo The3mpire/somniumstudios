@@ -35,8 +35,10 @@ public class ScreenFader : MonoBehaviour
 
     void SetFadersEnabled(bool value)
     {
-        foreach (ScreenFadeControl fadeControl in fadeControls)
-            fadeControl.enabled = value;
+        foreach (ScreenFadeControl fadeControl in fadeControls) {
+            if(fadeControl)
+                fadeControl.enabled = value;
+        }
     }
 
     public IEnumerator FadeOut()

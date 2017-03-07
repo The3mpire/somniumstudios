@@ -2,8 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour {
+
+    [Tooltip("The Pause gui")]
+    public GameObject pausePanel;
+
+    private bool menu = false;
 
     // Use this for initialization
     void Start() {
@@ -13,8 +20,30 @@ public class MenuManager : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
+        if (Input.GetButtonDown("Cancel") && !menu) {
+            pausePanel.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(pausePanel.GetComponentInChildren<Button>().gameObject);
+            menu = true;
+            //Cursor.visible = true;
+            Time.timeScale = 0;
+        }
+        else if (Input.GetButtonDown("Cancel") && menu) {
+            pausePanel.SetActive(false);
+            Cursor.visible = false;
+            EventSystem.current.SetSelectedGameObject(null);
+            menu = false;
+            Time.timeScale = 1;
+        }
     }
 
+
+    public void ResumeGame() {
+        pausePanel.SetActive(false);
+        Cursor.visible = false;
+        EventSystem.current.SetSelectedGameObject(null);
+        menu = false;
+        Time.timeScale = 1;
+    }
 
     /// <summary>
     /// Start the entire game over
@@ -34,6 +63,8 @@ public class MenuManager : MonoBehaviour {
     /// Go back to main menu
     /// </summary>
     public void ExitLevel() {
+        Time.timeScale = 1;
+        pausePanel.SetActive(false);
         GameManager.ExitLevel();
     }
 
