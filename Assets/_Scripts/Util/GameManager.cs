@@ -51,47 +51,34 @@ public class GameManager : MonoBehaviour {
         instance.fade.GetComponent<ScreenFader>().fadeIn = true;
     }
 
-    /// <summary>
-    /// Restart from most recent checkpoint/levelLoad
-    /// </summary>
-    public void RestartLevel() {
-        Cursor.visible = false;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
 
+    public static void StartGame() {
+        Cursor.visible = false;
+        ChangeScene(1);
+    }
 
     /// <summary>
     /// Start the entire game over
     /// </summary>
-    public void RestartGame() {
+    public static void RestartGame() {
         Cursor.visible = false;
-        SceneManager.LoadScene(0);
+        ChangeScene(1);
     }
 
     /// <summary>
     /// Continue from where you left off
     /// </summary>
-    public void ContinueGame() {
+    public static void ContinueGame() {
         Cursor.visible = false;
-        SceneManager.LoadScene(PlayerPrefs.GetInt("level"));
+        //TODO do the thing
     }
 
     /// <summary>
     /// Go back to main menu
     /// </summary>
-    public void ExitLevel() {
+    public static void ExitLevel() {
         Cursor.visible = false;
-        SceneManager.LoadScene(0);
-    }
-
-    /// <summary>
-    /// Start a brand new game
-    /// </summary>
-    public void NewGame() {
-        PlayerPrefs.SetInt("points", 0);
-        PlayerPrefs.SetInt("level", 0);
-        Cursor.visible = false;
-        SceneManager.LoadScene(1);
+        ChangeScene(0);
     }
 
     //private IEnumerator menuWait(float time)
@@ -103,8 +90,9 @@ public class GameManager : MonoBehaviour {
     /// <summary>
     /// Exit the entire application
     /// </summary>
-    public void ExitGame() {
+    public static void ExitGame() {
         Application.Quit();
     }
+
     #endregion
 }
