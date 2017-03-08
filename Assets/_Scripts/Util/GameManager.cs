@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour {
     #region Level/Scene Methods
 
     public static void ChangeScene(int levelIndex) {
-        if (levelIndex == 3)
+        if (levelIndex == 3 || levelIndex == 0)
         {
             Cursor.visible = true;
         }

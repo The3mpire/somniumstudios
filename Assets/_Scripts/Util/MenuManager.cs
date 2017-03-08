@@ -24,7 +24,7 @@ public class MenuManager : MonoBehaviour {
             pausePanel.SetActive(true);
             EventSystem.current.SetSelectedGameObject(pausePanel.GetComponentInChildren<Button>().gameObject);
             menu = true;
-            //Cursor.visible = true;
+            Cursor.visible = true;
             Time.timeScale = 0;
         }
         else if (Input.GetButtonDown("Cancel") && menu) {
