@@ -15,20 +15,23 @@ public class Draggable : MonoBehaviour {
     //TODO put in puzzle manager
     private int layerCount = 0;
 
-    void OnMouseDown() {
-        if (isDraggable) {
-            gameObject.GetComponent<SpriteRenderer>().sortingOrder = PuzzleManager.getLayerCounter();
+    void OnMouseDown()
+    {
+        if (isDraggable)
+        {
+           // gameObject.GetComponent<SpriteRenderer>().sortingOrder = PuzzleManager.getLayerCounter();
 
             screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
-
 
            // offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
             Cursor.visible = false;
         }
     }
 
-    void OnMouseDrag() {
-        if (isDraggable) {
+    void OnMouseDrag()
+    {
+        if (isDraggable)
+        {
             Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
 
             Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);
@@ -36,9 +39,12 @@ public class Draggable : MonoBehaviour {
         }
     }
 
-    void OnMouseUp() {
-        if (receptacle.GetComponent<BoxCollider2D>().bounds.Contains(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z)))) {
-            if (hasInterruptor) {
+    void OnMouseUp()
+    {
+        if (receptacle.GetComponent<BoxCollider2D>().bounds.Contains(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1000f))))
+        {
+            if (hasInterruptor)
+            {
                 if (interruptor.GetComponent<Interruptor>().getLight())
                     Snap();
             }
@@ -48,14 +54,15 @@ public class Draggable : MonoBehaviour {
         Cursor.visible = true;
     }
 
-    void Snap() {
+    void Snap()
+    {
         Transform parentLocation = receptacle.transform;
-
-        //receptacle.GetComponent<SpriteRenderer>().color = Color.gray;
 
         transform.position = parentLocation.position;
 
-        GetComponent<SpriteRenderer>().sortingOrder = -1;
+        transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
+
+      //  GetComponent<SpriteRenderer>().sortingOrder = -1;
 
         isDraggable = false;
 
