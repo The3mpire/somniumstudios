@@ -14,7 +14,6 @@ namespace Somnium
 
         public void Interact()
         {
-            Debug.Log("here");
             GameManager.ChangeScene(1);
         }
     }
