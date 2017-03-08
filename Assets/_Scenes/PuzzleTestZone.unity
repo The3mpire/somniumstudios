@@ -215,6 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f44ec00ae5d0043bdbc4c3dae1d309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfx: {fileID: 8300000, guid: 4e9ce89d9e841d149bdc21d022db4d88, type: 3}
   isDraggable: 1
   hasInterruptor: 0
   receptacle: {fileID: 351857548}
@@ -978,6 +979,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f44ec00ae5d0043bdbc4c3dae1d309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfx: {fileID: 8300000, guid: 4e9ce89d9e841d149bdc21d022db4d88, type: 3}
   isDraggable: 1
   hasInterruptor: 0
   receptacle: {fileID: 1558473875}
@@ -1739,6 +1741,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f44ec00ae5d0043bdbc4c3dae1d309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfx: {fileID: 0}
   isDraggable: 1
   hasInterruptor: 1
   receptacle: {fileID: 1187570814}
@@ -2076,6 +2079,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f44ec00ae5d0043bdbc4c3dae1d309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfx: {fileID: 8300000, guid: 4e9ce89d9e841d149bdc21d022db4d88, type: 3}
   isDraggable: 1
   hasInterruptor: 0
   receptacle: {fileID: 1414726825}

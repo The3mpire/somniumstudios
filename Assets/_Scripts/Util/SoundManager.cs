@@ -86,7 +86,7 @@ public class SoundManager : MonoBehaviour {
 		fxSource.volume = vol;
 	}
 
-	public void SetMusicVolume(float vol = 1f){
+	public void SetMusicVolume(float vol = .8f){
 		musicSource.volume = vol;
 	}
 

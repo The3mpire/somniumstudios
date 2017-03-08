@@ -5,6 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(MeshCollider))]
 
 public class Draggable : MonoBehaviour {
+
+    [SerializeField]
+    private AudioClip sfx;
+
     private Vector3 screenPoint;
     //private Vector3 offset;
     [SerializeField]
@@ -69,6 +73,10 @@ public class Draggable : MonoBehaviour {
 
     void Snap()
     {
+
+        SoundManager.instance.PlaySingle(sfx, 1f);
+
+
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
         Transform parentLocation = receptacle.transform;
 
