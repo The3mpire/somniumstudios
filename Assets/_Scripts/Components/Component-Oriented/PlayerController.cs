@@ -46,5 +46,13 @@ namespace Somnium
                 inter.Interact(savedDirection);
             }
         }
+
+        void OnTriggerEnter(Collider col)
+        {
+            if(col.gameObject.name.Equals("ToPoliceStation"))
+            {
+                GameManager.ChangeScene(2);
+            }
+        }
     }
 }

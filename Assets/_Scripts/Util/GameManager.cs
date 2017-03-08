@@ -35,6 +35,10 @@ public class GameManager : MonoBehaviour {
     #region Level/Scene Methods
 
     public static void ChangeScene(int levelIndex) {
+        if (levelIndex == 3)
+        {
+            Cursor.visible = true;
+        }
         instance.fade.GetComponent<ScreenFader>().fadeIn = false;
 
         // coroutine before change scene
