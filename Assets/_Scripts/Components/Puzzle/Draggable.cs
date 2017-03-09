@@ -96,6 +96,7 @@ public class Draggable : MonoBehaviour {
 
         PuzzleManager.incrementPiecesPlaced();
         gameObject.GetComponent<MeshRenderer>().enabled = false;
+        gameObject.GetComponentInChildren<MeshRenderer>().enabled = false;
         //StartCoroutine(FadeOut());
         StartCoroutine(FadeIn());
     }
@@ -121,7 +122,7 @@ public class Draggable : MonoBehaviour {
             receptacle.GetComponent<SpriteRenderer>().color = receptacleColor;
             yield return new WaitForSeconds(fadeTime);
         }
-        StartCoroutine(Wait(0.5f));
+        StartCoroutine(Wait(0.001f));
     }
     public IEnumerator Wait(float time)
     {

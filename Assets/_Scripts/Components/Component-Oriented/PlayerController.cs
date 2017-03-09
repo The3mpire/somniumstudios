@@ -49,7 +49,7 @@ namespace Somnium
 
         void OnTriggerEnter(Collider col)
         {
-            if(col.gameObject.name.Equals("ToPoliceStation"))
+            if(col.gameObject.name.Equals("SceneChanger"))
             {
                 GameManager.ChangeScene(2);
             }

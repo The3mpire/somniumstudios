@@ -27,6 +27,7 @@ public class PuzzleManager : MonoBehaviour {
             Destroy(gameObject);
 
         piecesPlaced = 0;
+        Cursor.visible = true;
     }
 
 
