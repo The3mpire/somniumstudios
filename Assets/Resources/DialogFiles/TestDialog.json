@@ -1,5 +1,1 @@
-{"Id":0,
-"DialogText":"Hello this is a test message in order to test the dialog engine. This should print out character by character until the limit has been reached.",
-"Choices":[{"Text":"Choice 1","Value":true,"NextDialog":{"Id":1,"DialogText":"This is the test message when choice 1 is chosen",
-"Choices":[]}},
-{"Text":"Choice 2","Value":false,"NextDialog":{"Id":2,"DialogText":"This is a the test message for when choice 2 is chosen","Choices":[]}}]}
+[{"dialogText":"Hello and welcome to Somnium.$To move, use WASD.$To Interact, press E.$To move to the next area, move to the edge of the map.","choices":[],"id":0}]

@@ -55,6 +55,8 @@ namespace Somnium
             [Tooltip("Rate at which characters appear in the textbox")]
             [Range(1,60)]
             public float charRate;
+
+            public char pageDelimiter;
         }
 
         [Serializable]
@@ -109,13 +111,6 @@ namespace Somnium
             }
             DontDestroyOnLoad(gameObject);
             dialogCanvas.enabled = false;
-        }
-
-        private void Start()
-        {
-            //StartDialog("DialogFiles/TestDialog");
-            //StartDialog("Assets/Resources/DialogFiles/TestDialog.json");
-            //StartDialogAt("Assets/Resources/DialogFiles/TestDialog.json", 2);
         }
 
         /// <summary>
@@ -178,15 +173,23 @@ namespace Somnium
             dialogSettings.textBox.text = "";
             foreach(char c in text)
             {
-                if (i > dialogSettings.charsPerBox)
+                if(c.Equals( dialogSettings.pageDelimiter))
                 {
                     yield return new WaitUntil(() => Input.GetButtonDown(nextButtonName));
                     dialogSettings.textBox.text = "";
                     i = 0;
+                } else
+                {
+                    if (i > dialogSettings.charsPerBox)
+                    {
+                        yield return new WaitUntil(() => Input.GetButtonDown(nextButtonName));
+                        dialogSettings.textBox.text = "";
+                        i = 0;
+                    }
+                    dialogSettings.textBox.text += c;
+                    i++;
+                    yield return new WaitForSeconds(1 / dialogSettings.charRate);
                 }
-                dialogSettings.textBox.text += c;
-                i++;
-                yield return new WaitForSeconds(1/dialogSettings.charRate);
             }
             yield return new WaitUntil(() => Input.GetButtonDown(nextButtonName));
             dialogSettings.dialogPanel.gameObject.SetActive(false);
@@ -198,15 +201,16 @@ namespace Somnium
             choiceSettings.choicePanel.gameObject.SetActive(true);
             Vector2 buttonPosition = choiceSettings.initPosition;
             bool choiceSelected = false;
+            List<Button> buttons = new List<Button>();
             for(int i = 0; i < choices.Count; i++)
             {
-                Choice c = choices[i];
+                Choice choice = choices[i];
                 //Inefficient, should be object pooling at creation time of DialogManager, oh well.
                 Button b = Instantiate(choiceSettings.choiceButtonPrefab, choiceSettings.choicePanel.transform, false);
-                b.GetComponentInChildren<Text>().text = c.Text;
+                b.GetComponentInChildren<Text>().text = choice.Text;
                 b.GetComponent<RectTransform>().localPosition = buttonPosition;
+                buttons.Add(b);
                 int j = i;
-                Choice choice = choices[i];
                 b.onClick.AddListener(()=> {
                     choiceSelected = true;
                     if (ChoiceSelectedEvent != null)
@@ -219,6 +223,10 @@ namespace Somnium
                 buttonPosition = new Vector2(0, buttonPosition.y - r.height);
             }
             yield return new WaitUntil(() => { return choiceSelected; });
+            foreach(Button b in buttons)
+            {
+                DestroyImmediate(b.gameObject);
+            }
             choiceSettings.choicePanel.gameObject.SetActive(false);
             yield return new WaitForEndOfFrame();
         }
@@ -244,21 +252,33 @@ namespace Somnium
         static Dialog LoadDialogFile(string path)
         {
             TextAsset json = Resources.Load<TextAsset>(path);
-            Dialog root = JsonConvert.DeserializeObject<Dialog>(json.text);
-            return root;
-            /*
-            if (File.Exists(path))
+            List<JsonDialog> data = JsonConvert.DeserializeObject<List<JsonDialog>>(json.text);
+            List<Dialog> dialogs = ConvertJsonDialog(data);
+            return dialogs[0];
+        }
+
+        /// <summary>
+        /// Converts array-formatted json dialog data to a graph.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        static List<Dialog> ConvertJsonDialog(List<JsonDialog> data)
+        {
+            List<Dialog> dialogs = new List<Dialog>();
+            List<Choice> choices = new List<Choice>();
+            foreach (JsonDialog item in data)
             {
-                string json = File.ReadAllText(path);
-                Dialog root = JsonConvert.DeserializeObject<Dialog>(json);
-                return root;
+                dialogs.Add(new Dialog(item.Id, item.DialogText));
             }
-            else
+            for (int i = 0; i < data.Count; i++)
             {
-                Debug.LogError("File at path: " + path + " does not exist.");
-                return null;
+                JsonDialog item = data[i];
+                foreach (JsonChoice choice in item.Choices)
+                {
+                    dialogs[i].Choices.Add(new Choice(choice.Text, choice.Value, dialogs[choice.NextDialog]));
+                }
             }
-            */
+            return dialogs;
         }
 
         static void SaveDialogToFile(string path, Dialog data)
@@ -267,7 +287,7 @@ namespace Somnium
             File.WriteAllText(path, json);
         }
 
-        sealed class DialogGraph
+        internal sealed class DialogGraph
         {
             public static Dialog DepthFirst(Dialog root, Func<Dialog, bool> comparer)
             {
@@ -320,12 +340,48 @@ namespace Somnium
             }
         }
 
-        sealed class Dialog : IComparable<int>
+        internal sealed class JsonDialog
+        {
+            public int Id { get; set; }
+            public string DialogText { get; set; }
+
+            public List<JsonChoice> Choices { get; private set; }
+
+            public JsonDialog(int id, string text, JsonChoice[] choices)
+            {
+                this.Id = id;
+                this.DialogText = text;
+                this.Choices = new List<JsonChoice>(choices);
+            }
+
+            public int CompareTo(int other)
+            {
+                return Id.CompareTo(other);
+            }
+        }
+
+        internal sealed class JsonChoice
+        {
+            public string Text { get; set; }
+            public object Value { get; set; }
+            public int NextDialog { get; set; }
+
+            public JsonChoice(string text, object value, int nextDialog)
+            {
+                this.Text = text;
+                this.Value = value;
+                this.NextDialog = nextDialog;
+            }
+        }
+
+        internal sealed class Dialog : IComparable<int>
         {
             public int Id { get; set; }
             public string DialogText { get; set; }
 
             public List<Choice> Choices { get; private set; }
+
+            public Dialog(int id, string text) : this(id, text, new Choice[0]) { }
 
             public Dialog(int id, string text, Choice[] choices)
             {
@@ -340,11 +396,13 @@ namespace Somnium
             }
         }
 
-        sealed class Choice
+        internal sealed class Choice
         {
             public string Text { get; set; }
             public object Value { get; set; }
             public Dialog NextDialog { get; set; }
+
+
 
             public Choice(string text, object value, Dialog nextDialog)
             {
