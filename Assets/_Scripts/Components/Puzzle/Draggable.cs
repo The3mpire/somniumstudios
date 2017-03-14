@@ -39,10 +39,8 @@ public class Draggable : MonoBehaviour {
     /// When you click the mouse and the item is draggable,
     /// the cursor hides and the object snaps to/follows the cursor
     /// </summary>
-    void OnMouseDown()
-    {
-        if (isDraggable)
-        {
+    void OnMouseDown() {
+        if (isDraggable) {
             screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
             Cursor.visible = false;
         }
@@ -51,10 +49,8 @@ public class Draggable : MonoBehaviour {
     /// <summary>
     /// When dragging with the mouse on an object, if follows the mouse position
     /// </summary>
-    void OnMouseDrag()
-    {
-        if (isDraggable)
-        {
+    void OnMouseDrag() {
+        if (isDraggable) {
             Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
 
             Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);
@@ -66,28 +62,25 @@ public class Draggable : MonoBehaviour {
     /// When the mouse is released, check the position of the object and see if it is in the correct location
     /// to snap to in the puzzle.
     /// </summary>
-    void OnMouseUp()
-    {
-        if (receptacle.GetComponent<BoxCollider2D>().bounds.Contains(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, 0f)));
-        {
-            if (hasInterruptor)
-            {
+    void OnMouseUp() {
+        Cursor.visible = true;
+        if (ReceptacleContains()/*receptacle.GetComponent<BoxCollider>().bounds.Contains(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, 0f))*/) {
+            if (hasInterruptor) {
                 if (interruptor.GetComponent<Interruptor>().getLight())
                     Snap();
             }
             else
                 Snap();
         }
-        Cursor.visible = true;
+
     }
 
     /// <summary>
     /// Helper method to snap the object in place
     /// </summary>
-    void Snap()
-    {
-        // Play the sound effect
-        SoundManager.instance.PlaySingle(sfx, 1f);
+    void Snap() {
+        // TODO Play the sound effect
+        //SoundManager.instance.PlaySingle(sfx, 1f);
 
         // Make the object kinematic so it won't fall
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
@@ -104,7 +97,7 @@ public class Draggable : MonoBehaviour {
 
         // Disable the colliders so it is no longer clickable
         GetComponent<MeshCollider>().enabled = false;
-        receptacle.GetComponent<BoxCollider2D>().enabled = false;
+        receptacle.GetComponent<BoxCollider>().enabled = false;
 
         PuzzleManager.incrementPiecesPlaced();
 
@@ -119,11 +112,9 @@ public class Draggable : MonoBehaviour {
     /// Fade out the alpha channel of the draggable object
     /// </summary>
     /// <returns></returns>
-    public IEnumerator FadeOut()
-    {
+    public IEnumerator FadeOut() {
         itemColor = gameObject.GetComponent<MeshRenderer>().material.color;
-        while (itemColor.a > 0)
-        {
+        while (itemColor.a > 0) {
             itemColor.a -= 0.01f;
             gameObject.GetComponent<MeshRenderer>().material.color = itemColor;
             yield return new WaitForSeconds(fadeTime);
@@ -135,11 +126,9 @@ public class Draggable : MonoBehaviour {
     /// Fade in the alpha channel of the 2D sprite of the 3D object in the puzzle
     /// </summary>
     /// <returns></returns>
-    public IEnumerator FadeIn()
-    {
+    public IEnumerator FadeIn() {
         receptacleColor = receptacle.GetComponent<SpriteRenderer>().color;
-        while (receptacleColor.a < 1)
-        {
+        while (receptacleColor.a < 1) {
             receptacleColor.a += 0.01f;
             receptacle.GetComponent<SpriteRenderer>().color = receptacleColor;
             yield return new WaitForSeconds(fadeTime);
@@ -152,9 +141,28 @@ public class Draggable : MonoBehaviour {
     /// </summary>
     /// <param name="time"> time to wait </param>
     /// <returns></returns>
-    public IEnumerator Wait(float time)
-    {
+    public IEnumerator Wait(float time) {
         yield return new WaitForSecondsRealtime(time);
         gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// Determines whether the object is within the receptacle x & y (DOES NOT CHECK Z)
+    /// </summary>
+    /// <returns></returns>
+    private bool ReceptacleContains() {
+
+        //TODO change to quaternion so player can rotate the piece freely && have a range of acceptable rotation (public variables)
+
+        //check the x
+        if (gameObject.transform.position.x <= (receptacle.transform.position.x + receptacle.GetComponent<BoxCollider>().size.x / 2)
+             && gameObject.transform.position.x >= (receptacle.transform.position.x - receptacle.GetComponent<BoxCollider>().size.x / 2)
+             && gameObject.transform.position.y <= (receptacle.transform.position.y + receptacle.GetComponent<BoxCollider>().size.y / 2)
+             && gameObject.transform.position.y >= (receptacle.transform.position.y - receptacle.GetComponent<BoxCollider>().size.y / 2)) {
+            return true;
+        }
+
+        // the object is not in the receptacle
+        return false;
     }
 }
