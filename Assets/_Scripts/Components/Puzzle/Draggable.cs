@@ -35,6 +35,9 @@ public class Draggable : MonoBehaviour {
     private Color receptacleColor;
     private Color itemColor;
 
+    [SerializeField]
+    private bool hasReceptacle;
+
     /// <summary>
     /// When you click the mouse and the item is draggable,
     /// the cursor hides and the object snaps to/follows the cursor
@@ -64,7 +67,7 @@ public class Draggable : MonoBehaviour {
     /// </summary>
     void OnMouseUp() {
         Cursor.visible = true;
-        if (ReceptacleContains()/*receptacle.GetComponent<BoxCollider>().bounds.Contains(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, 0f))*/) {
+        if (hasReceptacle && ReceptacleContains()/*receptacle.GetComponent<BoxCollider>().bounds.Contains(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, 0f))*/) {
             if (hasInterruptor) {
                 if (interruptor.GetComponent<Interruptor>().getLight())
                     Snap();
@@ -79,8 +82,8 @@ public class Draggable : MonoBehaviour {
     /// Helper method to snap the object in place
     /// </summary>
     void Snap() {
-        // TODO Play the sound effect
-        SoundManager.instance.PlaySingle(sfx, 1f);
+        //  Play the sound effect
+       // SoundManager.instance.PlaySingle(sfx, 1f);
 
         // Make the object kinematic so it won't fall
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
