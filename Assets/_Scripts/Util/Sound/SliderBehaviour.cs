@@ -4,13 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class SliderBehaviour : MonoBehaviour {
-
-    [SerializeField]
+    
     private Slider slider;
 
 	// Use this for initialization
 	void Start () {
         slider = gameObject.GetComponentInParent<Slider>();
+        if (slider.name.Contains("SFX")) {
+            slider.value = SoundManager.instance.GetSFXVolume();
+        }
+        else {
+            slider.value = SoundManager.instance.GetMusicVolume();
+        }
 	}
 	
 	// Update is called once per frame

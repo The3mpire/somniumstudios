@@ -80,7 +80,7 @@ public class Draggable : MonoBehaviour {
     /// </summary>
     void Snap() {
         // TODO Play the sound effect
-        //SoundManager.instance.PlaySingle(sfx, 1f);
+        SoundManager.instance.PlaySingle(sfx, 1f);
 
         // Make the object kinematic so it won't fall
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
