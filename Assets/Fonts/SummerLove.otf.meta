@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 38505c695bfa3f04da37ebd8a42edde2
+timeCreated: 1489527334
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: SummerLove
+  fontNames:
+  - SummerLove
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

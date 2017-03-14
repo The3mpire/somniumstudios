@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 30426d5ba50d15946ae74794562c322d
+timeCreated: 1489527581
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: DK Mandarin Whispers
+  fontNames:
+  - DK Mandarin Whispers
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
