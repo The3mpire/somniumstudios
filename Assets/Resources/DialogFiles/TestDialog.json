@@ -1,1 +1,1 @@
-[{"dialogText":"Hello and welcome to Somnium.$To move, use WASD.$To Interact, press E.$To move to the next area, move to the edge of the map.","choices":[],"id":0}]
+[{"dialogText":"Hello and welcome to somnium.$Use WASD to move.$Press E to interact.$Move to the edge of the screen to continue.$Would you like me to repeat that?","choices":[{"text":"Yes, please repeat.","value":"true","nextDialog":"0"},{"text":"No thank you.","value":"false","nextDialog":"1"}],"id":0},{"dialogText":"Ok, enjoy the game!","choices":[],"id":1}]

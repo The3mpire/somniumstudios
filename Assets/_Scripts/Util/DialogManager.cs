@@ -14,7 +14,7 @@ namespace Somnium
 #region Member Vars
 
         /// <summary>
-        /// The instance of the dialog manager, singleton pattern.
+        /// The instance of the dialog manager, provides access to manager methods and properties.
         /// </summary>
         public static DialogManager Instance { get; private set; }
 
@@ -115,6 +115,7 @@ namespace Somnium
 
         /// <summary>
         /// Starts a dialog interaction using dialog data in the specified file starting at the dialog with the given dialog ID.
+        /// Cannot start a dialog if the manager is already running a dialog file.
         /// </summary>
         /// <param name="dialogFilePath">Path to the specially formatted json dialog file.</param>
         /// <param name="dialogId">Id of the dialog that the interaction should start at.</param>
@@ -137,6 +138,7 @@ namespace Somnium
 
         /// <summary>
         /// Starts a dialog interaction using dialog data in the specified file starting at the root dialog object.
+        /// Cannot start a dialog if the manager is already running a dialog file.
         /// </summary>
         /// <param name="dialogFilePath">Path to the specially formatted json dialog file.</param>
         public void StartDialog(string dialogFilePath)
@@ -148,11 +150,23 @@ namespace Somnium
             }
         }
 
-        private void StartDialog(Dialog dialog)
+        /// <summary>
+        /// Waits until the dialog manager has finished the Display Dialog routine, then starts the specified dialog.
+        /// </summary>
+        /// <param name="d">Dialog to schedule</param>
+        IEnumerator ScheduleNextDialog(Dialog d)
         {
-            StartCoroutine(DisplayDialog(dialog, dialogSettings, choiceSettings));
+            yield return new WaitWhile(() => { return runningDisplayRoutine; });
+            StartCoroutine(DisplayDialog(d, dialogSettings, choiceSettings));
         }
 
+        /// <summary>
+        /// Main coroutine for managing the displaying of dialog.
+        /// This method will not return until both the DisplayText routine and the DisplayChoices (if the dialog had choices) routine finish.
+        /// </summary>
+        /// <param name="d">The dialog data to display.</param>
+        /// <param name="dialogSettings">Dialog settings to use for this routine.</param>
+        /// <param name="choiceSettings">Choices settings to use for this routine.</param>
         IEnumerator DisplayDialog(Dialog d, DialogSettings dialogSettings, ChoiceSettings choiceSettings)
         {
             runningDisplayRoutine = true;
@@ -166,11 +180,19 @@ namespace Somnium
             runningDisplayRoutine = false;
         }
 
+        /// <summary>
+        /// Handles displaying the text of a dialog.
+        /// If a page delimiter is reached, wait for the player to press the button specified by nextButtonName and afterwards, reset the text box.
+        /// If the number of characters written to the text box is greater than the number of characters allowed in the text box, wait for player input and reset the box.
+        /// </summary>
+        /// <param name="text">Text to write to the text box.</param>
+        /// <param name="dialogSettings">DialogSettings struct to use for controlling the display of the text.</param>
         IEnumerator DisplayText(string text, DialogSettings dialogSettings)
         {
             dialogSettings.dialogPanel.gameObject.SetActive(true);
             int i = 0;
             dialogSettings.textBox.text = "";
+
             foreach(char c in text)
             {
                 if(c.Equals( dialogSettings.pageDelimiter))
@@ -196,6 +218,13 @@ namespace Somnium
             yield return new WaitForEndOfFrame();
         }
 
+        /// <summary>
+        /// Handles displaying the choices contained in a dialog object.
+        /// Once the choices are displayed, waits for the player to click on one, then schedules the nextDialog Dialog object contained in that choice to run.
+        /// When the player selects a choice, a ChoiceSelectedEvent will fire and pass the index of that choice and the value that the choice contained.
+        /// </summary>
+        /// <param name="choices">List of Choice objects contained in the dialog object used in DisplayDialog.</param>
+        /// <param name="choiceSettings">Choice settings for controlling the placement/displaying of the choices.</param>
         IEnumerator DisplayChoices(List<Choice> choices, ChoiceSettings choiceSettings)
         {
             choiceSettings.choicePanel.gameObject.SetActive(true);
@@ -231,6 +260,10 @@ namespace Somnium
             yield return new WaitForEndOfFrame();
         }
 
+        /// <summary>
+        /// Helper method to schedule the nextDialog from the choice chosen in DisplayChoices routine.
+        /// </summary>
+        /// <param name="c">Selected choice.</param>
         private void ChoiceSelectionListener(Choice c)
         {
             Dialog d = c.NextDialog;
@@ -240,11 +273,7 @@ namespace Somnium
             }
         }
 
-        IEnumerator ScheduleNextDialog(Dialog d)
-        {
-            yield return new WaitWhile(() => { return runningDisplayRoutine; });
-            StartDialog(d);
-        }
+
 
         /// <summary>
         /// Reads in a dialog file and returns a root Dialog Node.
@@ -287,8 +316,18 @@ namespace Somnium
             File.WriteAllText(path, json);
         }
 
-        internal sealed class DialogGraph
+        /// <summary>
+        /// Contains utility methods for searching through a Dialog graph.
+        /// </summary>
+        internal static class DialogGraph
         {
+            /// <summary>
+            /// Performs a depth-first search on the Dialog object using the comparer. 
+            /// If the comparer returns true, that i the object that will be returned.
+            /// </summary>
+            /// <param name="root">Node to start searching from.</param>
+            /// <param name="comparer">Func that takes in a Dialog object, and returns either true or false.</param>
+            /// <returns>Object that caused comparer to return true, otherwise null.</returns>
             public static Dialog DepthFirst(Dialog root, Func<Dialog, bool> comparer)
             {
                 Stack<Dialog> stack = new Stack<Dialog>();
@@ -314,6 +353,13 @@ namespace Somnium
                 return null;
             }
 
+            /// <summary>
+            /// Performs a breadth-first search on the Dialog object using the comparer. 
+            /// If the comparer returns true, that i the object that will be returned.
+            /// </summary>
+            /// <param name="root">Node to start searching from.</param>
+            /// <param name="comparer">Func that takes in a Dialog object, and returns either true or false.</param>
+            /// <returns>Object that caused comparer to return true, otherwise null.</returns>
             public static Dialog BreadthFirst(Dialog root, Func<Dialog, bool> comparer)
             {
                 Queue<Dialog> queue = new Queue<Dialog>();
@@ -340,6 +386,9 @@ namespace Somnium
             }
         }
 
+        /// <summary>
+        /// Because I'm lazy and didn't do inheritance. This is the type of dialog object returned by reading the dialog json file.
+        /// </summary>
         internal sealed class JsonDialog
         {
             public int Id { get; set; }
@@ -360,6 +409,9 @@ namespace Somnium
             }
         }
 
+        /// <summary>
+        /// Because I'm lazy and didn't do inheritance. This is the type of choice object returned by reading the dialog json file.
+        /// </summary>
         internal sealed class JsonChoice
         {
             public string Text { get; set; }
@@ -374,11 +426,24 @@ namespace Somnium
             }
         }
 
+        /// <summary>
+        /// Type of Dialog object that this manager uses for controlling a dialog interactions.
+        /// </summary>
         internal sealed class Dialog : IComparable<int>
         {
+            /// <summary>
+            /// Id (aka index from the json file) of the Dialog.
+            /// </summary>
             public int Id { get; set; }
+
+            /// <summary>
+            /// Text of the dialog.
+            /// </summary>
             public string DialogText { get; set; }
 
+            /// <summary>
+            /// List of choices for the dialog (by default, the json dialogs always have choices, but its just an empty array).
+            /// </summary>
             public List<Choice> Choices { get; private set; }
 
             public Dialog(int id, string text) : this(id, text, new Choice[0]) { }
@@ -398,11 +463,20 @@ namespace Somnium
 
         internal sealed class Choice
         {
+            /// <summary>
+            /// Prompt text for the choice, displays on choice buttons.
+            /// </summary>
             public string Text { get; set; }
+
+            /// <summary>
+            /// Value of the Choice. Can be any primitive object.
+            /// </summary>
             public object Value { get; set; }
+
+            /// <summary>
+            /// Dialog to display when this choice is chosen.
+            /// </summary>
             public Dialog NextDialog { get; set; }
-
-
 
             public Choice(string text, object value, Dialog nextDialog)
             {
