@@ -36,7 +36,9 @@ public class MenuManager : MonoBehaviour {
         }
     }
 
-
+    /// <summary>
+    /// BROKEN
+    /// </summary>
     public void ResumeGame() {
         pausePanel.SetActive(false);
         Cursor.visible = false;

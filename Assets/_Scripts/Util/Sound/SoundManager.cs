@@ -7,16 +7,12 @@ public class SoundManager : MonoBehaviour {
     public AudioSource fxSource;                   //Drag a reference to the audio source which will play the sound effects.
     public AudioSource musicSource;                 //Drag a reference to the audio source which will play the music.
 
-    public AudioClip[] music;
-    public AudioClip[] fx;
-
-    //public AudioClip menuSong;
-    //public AudioClip gameSong;
-    //public AudioClip puzzleSong;
-
     public static SoundManager instance = null;     //Allows other scripts to call functions from SoundManager.             
     public float lowPitchRange = .95f;              //The lowest a sound effect will be randomly pitched.f
     public float highPitchRange = 1.05f;            //The highest a sound effect will be randomly pitched.
+
+    [SerializeField]
+    private AudioClip menuSong;
 
 
     void Awake() {
@@ -38,41 +34,35 @@ public class SoundManager : MonoBehaviour {
     }
     
     void Start() {
-		// play the game song
-        if (instance.musicSource.clip != music[1] && instance.musicSource.clip != null) {
-            instance.musicSource.clip = music[1];
-			Cursor.visible = false;
-        }
-		// play the menu song
-        else {
-            instance.musicSource.clip = music[0];
-			//Cursor.visible = true;
-        }
+       
+        Cursor.visible = true;
+
+        instance.musicSource.clip = menuSong;
         instance.musicSource.Play();
     }
 
+    /// <summary>
+    /// Check if we loaded the mainMenu
+    /// </summary>
     void OnLevelWasLoaded() {
+        // make sure we play the menu song when the player goes back to the menu
         if (SceneManager.GetActiveScene().name == "MainMenu") {
-            if(instance.musicSource.clip != music[0]) {
-                instance.musicSource.clip = music[0];
-                instance.musicSource.Play();
-            }
-			//Cursor.visible = true;
-        }
-        //play the puzzle song
-        else if(SceneManager.GetActiveScene().name == "PuzzleTestZone") {
-            if(instance.musicSource.clip != music[2]) {
-                instance.musicSource.clip = music[2];
+            if (instance.musicSource.clip != menuSong) {
+                instance.musicSource.clip = menuSong;
                 instance.musicSource.Play();
             }
         }
-        //play the game song
-        else{
-            if (instance.musicSource.clip != music[1]) {
-                instance.musicSource.clip = music[1];
-                instance.musicSource.Play();
-            }
-			Cursor.visible = false;
+    }
+
+    /// <summary>
+    /// The correct song for the scene
+    /// </summary>
+    /// <param name="song"></param>
+    public void SceneMusic(AudioClip song) {
+        //check to make sure we're not already playing that song
+        if(!instance.musicSource.clip.Equals(song)){
+            instance.musicSource.clip = song;
+            instance.musicSource.Play();
         }
     }
     

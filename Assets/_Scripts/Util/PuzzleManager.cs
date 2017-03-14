@@ -12,11 +12,8 @@ public class PuzzleManager : MonoBehaviour {
     public ScreenFader fade;
 
     [SerializeField]
+    [Tooltip("How many pieces are placed")]
     private static int piecesPlaced;
-
-    [SerializeField]
-    private static int layerCounter;
-    
 
     // Use this for initialization
     void Awake() {
@@ -30,16 +27,10 @@ public class PuzzleManager : MonoBehaviour {
         Cursor.visible = true;
     }
 
-
     /// <summary>
-    /// Return the layer counter and increment
+    /// Increment the number of pieces placed and if all of the pieces
+    /// have been placed then change back to the original scene and out of the puzzle
     /// </summary>
-    /// <returns></returns>
-    public static int getLayerCounter() {
-        return ++layerCounter;
-    }
-    
-
     public static void incrementPiecesPlaced() {
         piecesPlaced++;
 

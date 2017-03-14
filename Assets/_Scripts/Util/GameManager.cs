@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour {
     [Tooltip("Screen fader controller")]
     public GameObject fade;
 
-
     void Awake() {
         if (instance == null) {
             instance = this;
@@ -34,7 +33,12 @@ public class GameManager : MonoBehaviour {
 
     #region Level/Scene Methods
 
+    /// <summary>
+    /// Change the scene to the given scene number - using fading
+    /// </summary>
+    /// <param name="levelIndex"> the index in the build of the scene to change to </param>
     public static void ChangeScene(int levelIndex) {
+        // On puzzles and the main menu, dont hid the cursor
         if (levelIndex == 3 || levelIndex == 0)
         {
             Cursor.visible = true;
@@ -46,17 +50,27 @@ public class GameManager : MonoBehaviour {
         instance.StartCoroutine(coroutine);
     }
 
+    /// <summary>
+    /// Helper method to fade in and out of scenes
+    /// </summary>
+    /// <param name="levelIndex"></param>
+    /// <returns></returns>
     private IEnumerator FadeTime(int levelIndex) {
         yield return new WaitForSeconds(instance.fade.GetComponent<ScreenFader>().fadeTime);
      
         SceneManager.LoadSceneAsync(levelIndex);
     }
 
+    /// <summary>
+    /// Fade in the level when it loads
+    /// </summary>
     void OnLevelWasLoaded() {
         instance.fade.GetComponent<ScreenFader>().fadeIn = true;
     }
 
-
+    /// <summary>
+    /// When the start button is pressed on the main menu, load 1st scene
+    /// </summary>
     public static void StartGame() {
         Cursor.visible = false;
         ChangeScene(1);

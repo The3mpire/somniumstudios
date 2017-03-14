@@ -28,11 +28,14 @@ namespace Somnium
             Vector3 input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             savedDirection = input == Vector3.zero ? savedDirection : input;
 
+            // If the player is standing still - set animation to idle
             if (input.Equals(new Vector3(0f, 0f, 0f)))
                 animator.SetBool("isWalking", false);
+            // Otherwise set the animation to walking
             else
                 animator.SetBool("isWalking", true);
 
+            // Set facing direction based on x input
             if (input.x < 0)
                 animController.setFacing("Left");
             else if (input.x > 0)
@@ -47,8 +50,13 @@ namespace Somnium
             }
         }
 
+        /// <summary>
+        /// Used to change between levels
+        /// </summary>
+        /// <param name="col"></param>
         void OnTriggerEnter(Collider col)
         {
+            //TODO pls sir dont hardcode
             if(col.gameObject.name.Equals("SceneChanger"))
             {
                 GameManager.ChangeScene(2);
