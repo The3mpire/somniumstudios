@@ -29,7 +29,16 @@ public class MenuManager : MonoBehaviour {
         }
         else if (Input.GetButtonDown("Cancel") && menu) {
             pausePanel.SetActive(false);
-            Cursor.visible = false;
+
+            // don't kill the mouse -- we're in a puzzle scene
+            if (SceneManager.GetActiveScene().name.Contains("Puzzle")) {
+                Cursor.visible = true;
+            }
+            // not a puzzle scene
+            else {
+                Cursor.visible = false;
+            }
+
             EventSystem.current.SetSelectedGameObject(null);
             menu = false;
             Time.timeScale = 1;
@@ -37,11 +46,20 @@ public class MenuManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// BROKEN
+    /// Unpause the game
     /// </summary>
     public void ResumeGame() {
         pausePanel.SetActive(false);
-        Cursor.visible = false;
+
+        // don't kill the mouse -- we're in a puzzle scene
+        if (SceneManager.GetActiveScene().name.Contains("Puzzle")) {
+            Cursor.visible = true;
+        }
+        // not a puzzle scene
+        else {
+            Cursor.visible = false;
+        }
+
         EventSystem.current.SetSelectedGameObject(null);
         menu = false;
         Time.timeScale = 1;
@@ -55,7 +73,7 @@ public class MenuManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// Continue from where you left off
+    /// BROKEN (continue from mainMenu)
     /// </summary>
     public void ContinueGame() {
         GameManager.ContinueGame();
