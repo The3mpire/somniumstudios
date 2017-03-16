@@ -24,7 +24,12 @@ namespace Somnium
         /// Whether or not the manager is currently running a DisplayDialog routine.
         /// Used for handling the scheduling of displaying other dialogs.
         /// </summary>
-        public bool runningDisplayRoutine;
+        public bool RunningDisplayRoutine { get; private set; }
+
+        /// <summary>
+        /// dialogs that the manager is currently working on displaying.
+        /// </summary>
+        private Queue<Dialog> dialogQueue = new Queue<Dialog>();
 
         [SerializeField]
         [Tooltip("The canvas containing the dialog canvas.")]
@@ -82,6 +87,8 @@ namespace Somnium
         /// </summary>
         public event Action<int, object> ChoiceSelectedEvent;
 
+        public event Action NewPageEvent;
+
         /// <summary>
         /// Allows access to the dialog panel's sprite profile image.
         /// </summary>
@@ -121,17 +128,17 @@ namespace Somnium
         /// <param name="dialogId">Id of the dialog that the interaction should start at.</param>
         public void StartDialogAt(string dialogFilePath, int dialogId)
         {
-            if (!runningDisplayRoutine)
+            if (!RunningDisplayRoutine)
             {
                 Dialog d = LoadDialogFile(dialogFilePath);
-                Dialog search = DialogGraph.BreadthFirst(d, (n) => { return n.Id == dialogId; });
+                Dialog search = DialogGraph.BreadthFirst(dialogQueue.Peek(), (n) => { return n.Id == dialogId; });
                 if (search == null)
                 {
                     Debug.LogError("Could not find Dialog with ID of: " + dialogId);
                 }
                 else
                 {
-                    StartCoroutine(ScheduleNextDialog(search));
+                    StartCoroutine(ScheduleNextDialog(d));
                 }
             }
         }
@@ -143,7 +150,7 @@ namespace Somnium
         /// <param name="dialogFilePath">Path to the specially formatted json dialog file.</param>
         public void StartDialog(string dialogFilePath)
         {
-            if (!runningDisplayRoutine)
+            if (!RunningDisplayRoutine)
             {
                 Dialog d = LoadDialogFile(dialogFilePath);
                 StartCoroutine(ScheduleNextDialog(d));
@@ -156,8 +163,9 @@ namespace Somnium
         /// <param name="d">Dialog to schedule</param>
         IEnumerator ScheduleNextDialog(Dialog d)
         {
-            yield return new WaitWhile(() => { return runningDisplayRoutine; });
-            StartCoroutine(DisplayDialog(d, dialogSettings, choiceSettings));
+            yield return new WaitWhile(() => { return RunningDisplayRoutine; });
+            dialogQueue.Enqueue(d);
+            StartCoroutine(DisplayDialog(dialogSettings, choiceSettings));
         }
 
         /// <summary>
@@ -167,17 +175,24 @@ namespace Somnium
         /// <param name="d">The dialog data to display.</param>
         /// <param name="dialogSettings">Dialog settings to use for this routine.</param>
         /// <param name="choiceSettings">Choices settings to use for this routine.</param>
-        IEnumerator DisplayDialog(Dialog d, DialogSettings dialogSettings, ChoiceSettings choiceSettings)
+        IEnumerator DisplayDialog(DialogSettings dialogSettings, ChoiceSettings choiceSettings)
         {
-            runningDisplayRoutine = true;
+            RunningDisplayRoutine = true;
             dialogCanvas.enabled = true;
-            yield return StartCoroutine(DisplayText(d.DialogText, dialogSettings));
-            if (d.Choices != null && d.Choices.Count > 0)
+            PlayerController c = FindObjectOfType<PlayerController>();
+            if (c != null) c.ControlsEnabled = false;
+            while (dialogQueue.Count > 0)
             {
-                yield return StartCoroutine(DisplayChoices(d.Choices, choiceSettings));
-            } 
+                Dialog d = dialogQueue.Dequeue();
+                yield return StartCoroutine(DisplayText(d.DialogText, dialogSettings));
+                if (d.Choices != null && d.Choices.Count > 0)
+                {
+                    yield return StartCoroutine(DisplayChoices(d.Choices, choiceSettings));
+                }
+            }
+            if (c != null) c.ControlsEnabled = true;
             dialogCanvas.enabled = false;
-            runningDisplayRoutine = false;
+            RunningDisplayRoutine = false;
         }
 
         /// <summary>
@@ -197,15 +212,13 @@ namespace Somnium
             {
                 if(c.Equals( dialogSettings.pageDelimiter))
                 {
-                    yield return new WaitUntil(() => Input.GetButtonDown(nextButtonName));
-                    dialogSettings.textBox.text = "";
+                    yield return StartCoroutine(WaitForPlayerInput(dialogSettings));
                     i = 0;
                 } else
                 {
                     if (i > dialogSettings.charsPerBox)
                     {
-                        yield return new WaitUntil(() => Input.GetButtonDown(nextButtonName));
-                        dialogSettings.textBox.text = "";
+                        yield return StartCoroutine(WaitForPlayerInput(dialogSettings));
                         i = 0;
                     }
                     dialogSettings.textBox.text += c;
@@ -214,8 +227,20 @@ namespace Somnium
                 }
             }
             yield return new WaitUntil(() => Input.GetButtonDown(nextButtonName));
+            dialogSettings.textBox.text = "";
             dialogSettings.dialogPanel.gameObject.SetActive(false);
             yield return new WaitForEndOfFrame();
+        }
+
+        private IEnumerator WaitForPlayerInput(DialogSettings dialogSettings)
+        {
+            yield return new WaitUntil(() => Input.GetButtonDown(nextButtonName));
+            yield return new WaitForEndOfFrame();
+            dialogSettings.textBox.text = "";
+            if (NewPageEvent != null)
+            {
+                NewPageEvent();
+            }
         }
 
         /// <summary>
@@ -269,7 +294,7 @@ namespace Somnium
             Dialog d = c.NextDialog;
             if (d != null)
             {
-                StartCoroutine(ScheduleNextDialog(d));
+                dialogQueue.Enqueue(d);
             }
         }
 

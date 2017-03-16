@@ -25,7 +25,7 @@ namespace Somnium {
         /// <param name="scene"></param>
         /// <returns></returns>
         private IEnumerator WaitForDialog() {
-            yield return new WaitWhile(() => (DialogManager.Instance.runningDisplayRoutine));
+            yield return new WaitWhile(() => (DialogManager.Instance.RunningDisplayRoutine));
             GameManager.ChangeScene(3);
 
         }

@@ -51,7 +51,7 @@ namespace Somnium
                 }
             }
         }
-
+        
         void Start()
         {
             this.rigidBody = GetComponent<Rigidbody>();

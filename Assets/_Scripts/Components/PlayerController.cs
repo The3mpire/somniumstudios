@@ -15,6 +15,10 @@ namespace Somnium
 
         private AnimationController2D animController;
 
+        private bool controlsEnabled = true;
+
+        public bool ControlsEnabled { get { return controlsEnabled; } set { controlsEnabled = value; } }
+
         void Start()
         {
             cm = GetComponent<CharacterMovement>();
@@ -25,28 +29,30 @@ namespace Somnium
 
         void Update()
         {
-            Vector3 input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-            savedDirection = input == Vector3.zero ? savedDirection : input;
-
-            // If the player is standing still - set animation to idle
-            if (input.Equals(new Vector3(0f, 0f, 0f)))
-                animator.SetBool("isWalking", false);
-            // Otherwise set the animation to walking
-            else
-                animator.SetBool("isWalking", true);
-
-            // Set facing direction based on x input
-            if (input.x < 0)
-                animController.setFacing("Left");
-            else if (input.x > 0)
-                animController.setFacing("Right");
-
-
-            cm.Move(input);
-
-            if (Input.GetButtonDown("Interact"))
+            if (ControlsEnabled)
             {
-                inter.Interact(savedDirection);
+                Vector3 input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+                savedDirection = input == Vector3.zero ? savedDirection : input;
+
+                // If the player is standing still - set animation to idle
+                if (input.Equals(new Vector3(0f, 0f, 0f)))
+                    animator.SetBool("isWalking", false);
+                // Otherwise set the animation to walking
+                else
+                    animator.SetBool("isWalking", true);
+
+                // Set facing direction based on x input
+                if (input.x < 0)
+                    animController.setFacing("Left");
+                else if (input.x > 0)
+                    animController.setFacing("Right");
+
+                cm.Move(input);
+
+                if (Input.GetButtonDown("Interact"))
+                {
+                    inter.Interact(savedDirection);
+                }
             }
         }
 
@@ -57,7 +63,7 @@ namespace Somnium
         void OnTriggerEnter(Collider col)
         {
             //TODO pls sir dont hardcode
-            if(col.gameObject.name.Equals("SceneChanger"))
+            if (col.gameObject.name.Equals("SceneChanger"))
             {
                 GameManager.ChangeScene(2);
             }
