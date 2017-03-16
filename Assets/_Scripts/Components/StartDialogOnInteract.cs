@@ -15,6 +15,7 @@ namespace Somnium
 
         public void Interact()
         {
+            Cursor.visible = true;
             DialogManager.Instance.ProfileSprite = profileSprite;
             DialogManager.Instance.StartDialog(dialogFilePath);
         }
