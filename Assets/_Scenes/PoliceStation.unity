@@ -746,7 +746,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 1aeb359b54d67274b867bc3389e48d28, type: 2}
+  - {fileID: 2100000, guid: 9ca36713d7f769d46b2e673f5a597839, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1172,6 +1172,16 @@ Prefab:
         type: 2}
       propertyPath: interactableLayer.m_Bits
       value: 18432
+      objectReference: {fileID: 0}
+    - target: {fileID: 54893639832661420, guid: 6fd03ec13ee8edf448cd98c19c3057c6,
+        type: 2}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 54893639832661420, guid: 6fd03ec13ee8edf448cd98c19c3057c6,
+        type: 2}
+      propertyPath: m_Drag
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6fd03ec13ee8edf448cd98c19c3057c6, type: 2}
