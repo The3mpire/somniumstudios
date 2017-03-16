@@ -24,7 +24,7 @@ namespace Somnium
         /// Whether or not the manager is currently running a DisplayDialog routine.
         /// Used for handling the scheduling of displaying other dialogs.
         /// </summary>
-        private bool runningDisplayRoutine;
+        public bool runningDisplayRoutine;
 
         [SerializeField]
         [Tooltip("The canvas containing the dialog canvas.")]

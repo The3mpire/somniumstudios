@@ -60,7 +60,7 @@ public class SoundManager : MonoBehaviour {
     /// <param name="song"></param>
     public void SceneMusic(AudioClip song) {
         //check to make sure we're not already playing that song
-        if(!instance.musicSource.clip.Equals(song)){
+        if(instance.musicSource != null || !instance.musicSource.clip.Equals(song)){
             instance.musicSource.clip = song;
             instance.musicSource.Play();
         }
