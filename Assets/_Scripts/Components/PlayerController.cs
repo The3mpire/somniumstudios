@@ -57,6 +57,13 @@ namespace Somnium
         }
 
         /// <summary>
+        /// Place the player's location to where they were
+        /// </summary>
+        void OnLevelWasLoaded() {
+            transform.position = GameManager.GetPreviousLocation();
+        }
+
+        /// <summary>
         /// Used to change between levels
         /// </summary>
         /// <param name="col"></param>

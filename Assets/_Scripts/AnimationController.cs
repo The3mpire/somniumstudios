@@ -9,19 +9,23 @@ namespace Somnium {
     public class AnimationController : MonoBehaviour, IInteractable {
 
         private Animator anim;
+        private int seen;
 
         public void Interact() {
-            anim.SetBool("isShocked", true);
+            if (seen == 1) {
+                anim.SetBool("isShocked", true);
+            }
+            else
+                anim.SetBool("isShocked", false);
+            seen++;
         }
 
         // Use this for initialization
         void Start() {
+            seen = 0;
+            DialogManager.Instance.NewPageEvent += Interact;
             anim = gameObject.GetComponent<Animator>();
             anim.SetBool("isShocked", false);
-        }
-
-        // Update is called once per frame
-        void Update() {
         }
     }
 }

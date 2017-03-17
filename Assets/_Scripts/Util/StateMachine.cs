@@ -48,6 +48,11 @@ public class StateMachine : MonoBehaviour {
         figments[key] = state;
     }
 
+    public bool isUnsolved(string sceneName) {
+        return memories[sceneName];
+    }
+
+
     //TODO 
     ////write to file
     //static void SaveGame() {

@@ -37,8 +37,8 @@ public class PuzzleManager : MonoBehaviour {
         if(piecesPlaced == instance.pieceCount) {
 
             StateMachine.instance.updateMemDictionary(SceneManager.GetActiveScene().name, false);
-            //TODO make not hardcoded
-            GameManager.ChangeScene(2);
+            
+            GameManager.ChangeScene(GameManager.GetPreviousScene());
         }
     }
 

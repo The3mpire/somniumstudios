@@ -10,6 +10,10 @@ public class GameManager : MonoBehaviour {
     [Tooltip("Screen fader controller")]
     public GameObject fade;
 
+    // where the player was standing when the puzzle launched
+    private static Vector3 previousLocation;
+    private static int previousSceneIndex;
+
     void Awake() {
         if (instance == null) {
             instance = this;
@@ -23,13 +27,12 @@ public class GameManager : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-
     }
 
     // Update is called once per frame
     void Update() {
-    }
 
+    }
 
     #region Level/Scene Methods
 
@@ -38,6 +41,7 @@ public class GameManager : MonoBehaviour {
     /// </summary>
     /// <param name="levelIndex"> the index in the build of the scene to change to </param>
     public static void ChangeScene(int levelIndex) {
+        // TODO fix this awful hardcoded bullshit fuck you Karla you stupid bitch
         // On puzzles and the main menu, dont hid the cursor
         if (levelIndex == 3 || levelIndex == 0)
         {
@@ -48,6 +52,16 @@ public class GameManager : MonoBehaviour {
         // coroutine before change scene
         IEnumerator coroutine = instance.FadeTime(levelIndex);
         instance.StartCoroutine(coroutine);
+    }
+
+    /// <summary>
+    /// Change the scene to the given scene - using fading
+    /// </summary>
+    /// <param name="levelIndex"> the index in the build of the scene to change to </param>
+    public static void ChangeScene(Scene scene) {
+        // just call the other method
+        Debug.Log("prev scene is " + GetPreviousScene());
+        ChangeScene(scene.buildIndex);
     }
 
     /// <summary>
@@ -115,4 +129,41 @@ public class GameManager : MonoBehaviour {
     }
 
     #endregion
+
+    #region Puzzle Related Methods
+
+    /// <summary>
+    /// Set the previous location of the player 
+    /// </summary>
+    /// <param name="playerLocation"></param>
+    public static void SetPreviousLocation(Vector3 playerLocation) {
+        previousLocation = playerLocation;
+    }
+
+    /// <summary>
+    /// Get the previous location of the player
+    /// </summary>
+    /// <returns></returns>
+    public static Vector3 GetPreviousLocation() {
+        return previousLocation;
+    }
+
+    /// <summary>
+    /// Set the previous scene the player was in 
+    /// </summary>
+    /// <param name="prevScene"></param>
+    public static void SetPreviousScene(Scene prevScene) {
+        previousSceneIndex = prevScene.buildIndex;
+    }
+
+    /// <summary>
+    /// Get the previous Scene the player was in
+    /// </summary>
+    /// <returns></returns>
+    public static int GetPreviousScene() {
+        return previousSceneIndex;
+    }
+
+    #endregion
+
 }

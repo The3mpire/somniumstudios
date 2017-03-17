@@ -265,6 +265,11 @@ namespace Somnium
                 b.GetComponent<RectTransform>().localPosition = buttonPosition;
                 buttons.Add(b);
                 int j = i;
+
+                if (NewPageEvent != null) {
+                    NewPageEvent();
+                }
+
                 b.onClick.AddListener(()=> {
                     choiceSelected = true;
                     if (ChoiceSelectedEvent != null)
