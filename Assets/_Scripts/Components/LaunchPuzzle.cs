@@ -9,7 +9,7 @@ namespace Somnium {
     public sealed class LaunchPuzzle : MonoBehaviour {
         [Tooltip("Link the player so we can do shit with it")]
         [SerializeField]
-        private GameObject Player;
+        private GameObject player;
 
         private void Start() {
             DialogManager.Instance.ChoiceSelectedEvent += Interact;
@@ -30,8 +30,9 @@ namespace Somnium {
         private IEnumerator WaitForDialog() {
             yield return new WaitWhile(() => (DialogManager.Instance.RunningDisplayRoutine));
             // set the previous location before we launch the puzzle
-            GameManager.SetPreviousLocation(Player.transform.position);
+            GameManager.SetPreviousLocation(player.transform.position);
             GameManager.SetPreviousScene(SceneManager.GetActiveScene());
+			StateMachine.wasInPuzzle = true;
 
             GameManager.ChangeScene(3);
         }

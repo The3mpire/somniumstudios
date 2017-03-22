@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour {
     /// <param name="levelIndex"> the index in the build of the scene to change to </param>
     public static void ChangeScene(Scene scene) {
         // just call the other method
-        Debug.Log("prev scene is " + GetPreviousScene());
+
         ChangeScene(scene.buildIndex);
     }
 

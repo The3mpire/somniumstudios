@@ -10,6 +10,9 @@ public class StateMachine : MonoBehaviour {
     [Tooltip("don't touch this")]
     public static StateMachine instance = null;
 
+	[Tooltip("whether or not the player was just in a puzzle scene")]
+	public static bool wasInPuzzle = false;
+
     private Dictionary<string, bool> figments;
     private Dictionary<string, bool> memories;
 

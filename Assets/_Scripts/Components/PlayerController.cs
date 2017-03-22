@@ -60,7 +60,10 @@ namespace Somnium
         /// Place the player's location to where they were
         /// </summary>
         void OnLevelWasLoaded() {
-            transform.position = GameManager.GetPreviousLocation();
+			if (StateMachine.wasInPuzzle) {
+				transform.position = GameManager.GetPreviousLocation ();
+				StateMachine.wasInPuzzle = false;
+			}
         }
 
         /// <summary>
