@@ -46,6 +46,5 @@ public class SliderBehaviour : MonoBehaviour {
     /// </summary>
     public void SetSliderPosition(float pos) {
         slider.value = pos;
-        Debug.Log(slider.value);
     }
 }

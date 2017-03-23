@@ -14,6 +14,8 @@ public class SoundManager : MonoBehaviour {
     [SerializeField]
     private AudioClip menuSong;
 
+	private float musicVol;
+
 
     void Awake() {
         //Check if there is already an instance of SoundManager
@@ -29,8 +31,6 @@ public class SoundManager : MonoBehaviour {
         //Set SoundManager to DontDestroyOnLoad so that it won't be destroyed when reloading our scene.
         DontDestroyOnLoad(gameObject);
 
-        //TODO rename audio things
-
     }
     
     void Start() {
@@ -40,6 +40,52 @@ public class SoundManager : MonoBehaviour {
         instance.musicSource.clip = menuSong;
         instance.musicSource.Play();
     }
+
+	/// <summary>
+	/// Fades the music out.
+	/// </summary>
+	public void FadeOutMusic()
+	{
+		musicVol = musicSource.volume;
+		StartCoroutine(FadeMusicOutCo());
+	}
+
+	/// <summary>
+	/// Fades the music in to the previous volume.
+	/// </summary>
+	public void FadeInMusic(){
+		StartCoroutine(FadeMusicInCo());
+	}
+
+	/// <summary>
+	/// Fades the music in. (Coroutine)
+	/// </summary>
+	/// <returns>The music in co.</returns>
+	private IEnumerator FadeMusicInCo(){
+		Debug.Log ("Fading in");
+		while (musicSource.volume < musicVol) {
+			musicSource.volume = Mathf.Lerp(musicSource.volume, musicVol, Time.deltaTime);
+			yield return musicVol;
+		}
+		musicSource.volume = musicVol;
+	}
+
+	/// <summary>
+	/// Fades the music out. (Coroutine)
+	/// </summary>
+	/// <returns>The music out co.</returns>
+	private IEnumerator FadeMusicOutCo()
+	{
+		Debug.Log ("Fading out");
+
+		while(musicSource.volume > .05F)
+		{
+			musicSource.volume = Mathf.Lerp(musicSource.volume, 0F, Time.deltaTime);
+			yield return 0;
+		}
+		musicSource.volume = 0;
+		//perfect opportunity to insert an on complete hook here before the coroutine exits.
+	}
 
     /// <summary>
     /// Check if we loaded the mainMenu

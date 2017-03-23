@@ -47,8 +47,10 @@ public class GameManager : MonoBehaviour {
         {
             Cursor.visible = true;
         }
+
         instance.fade.GetComponent<ScreenFader>().fadeIn = false;
 
+		SoundManager.instance.FadeOutMusic ();
         // coroutine before change scene
         IEnumerator coroutine = instance.FadeTime(levelIndex);
         instance.StartCoroutine(coroutine);
@@ -79,6 +81,7 @@ public class GameManager : MonoBehaviour {
     /// Fade in the level when it loads
     /// </summary>
     void OnLevelWasLoaded() {
+		SoundManager.instance.FadeInMusic ();
         instance.fade.GetComponent<ScreenFader>().fadeIn = true;
     }
 
