@@ -62,6 +62,8 @@ namespace Somnium
             public float charRate;
 
             public char pageDelimiter;
+
+            public Image nextIndicator;
         }
 
         [Serializable]
@@ -226,7 +228,9 @@ namespace Somnium
                     yield return new WaitForSeconds(1 / dialogSettings.charRate);
                 }
             }
+            dialogSettings.nextIndicator.gameObject.SetActive(true);
             yield return new WaitUntil(() => Input.GetButtonDown(nextButtonName));
+            dialogSettings.nextIndicator.gameObject.SetActive(false);
             dialogSettings.textBox.text = "";
             dialogSettings.dialogPanel.gameObject.SetActive(false);
             yield return new WaitForEndOfFrame();
@@ -234,7 +238,9 @@ namespace Somnium
 
         private IEnumerator WaitForPlayerInput(DialogSettings dialogSettings)
         {
+            dialogSettings.nextIndicator.gameObject.SetActive(true);
             yield return new WaitUntil(() => Input.GetButtonDown(nextButtonName));
+            dialogSettings.nextIndicator.gameObject.SetActive(false);
             yield return new WaitForEndOfFrame();
             dialogSettings.textBox.text = "";
             if (NewPageEvent != null)
