@@ -14,6 +14,7 @@ namespace Somnium {
         public void Interact() {
             if (seen == 1) {
                 anim.SetBool("isShocked", true);
+				gameObject.GetComponent<SpriteRenderer> ().flipX = true;
             }
             else
                 anim.SetBool("isShocked", false);
@@ -26,6 +27,7 @@ namespace Somnium {
             DialogManager.Instance.NewPageEvent += Interact;
             anim = gameObject.GetComponent<Animator>();
             anim.SetBool("isShocked", false);
+			gameObject.GetComponent<SpriteRenderer> ().flipX = false;
         }
     }
 }
