@@ -78,5 +78,13 @@ namespace Somnium
                 GameManager.ChangeScene(2);
             }
         }
+
+//		void OnCollisionEnter(Collider col)
+//		{
+//			if (col.gameObject.tag.Equals ("NPC")) 
+//			{
+//				Physics.IgnoreCollision (col.collider, collider);
+//			}
+//		}
     }
 }
