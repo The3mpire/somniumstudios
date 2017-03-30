@@ -86,14 +86,6 @@ public class GameManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// When the start button is pressed on the main menu, load 1st scene
-    /// </summary>
-    public static void StartGame() {
-        Cursor.visible = false;
-        ChangeScene(1);
-    }
-
-    /// <summary>
     /// Start the entire game over
     /// </summary>
     public static void RestartGame() {

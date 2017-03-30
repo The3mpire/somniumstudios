@@ -92,7 +92,11 @@ public class MenuManager : MonoBehaviour {
     /// Start a new game
     /// </summary>
     public void StartGame() {
-        GameManager.StartGame();
+		// TODO if we have save data, ask if they're sure.
+		//if(saveData)
+		//call another method that will prompt and then take their response.
+		//otherwise call restart
+        GameManager.RestartGame();
     }
 
     //private IEnumerator menuWait(float time)

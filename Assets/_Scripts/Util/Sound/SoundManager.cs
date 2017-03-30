@@ -13,7 +13,7 @@ public class SoundManager : MonoBehaviour {
 
     [SerializeField]
     private AudioClip menuSong;
-
+	[SerializeField]
 	private float musicVol;
 
 
@@ -77,6 +77,7 @@ public class SoundManager : MonoBehaviour {
 	private IEnumerator FadeMusicOutCo()
 	{
 		Debug.Log ("Fading out");
+		musicVol = musicSource.volume;
 
 		while(musicSource.volume > .05F)
 		{
@@ -139,6 +140,7 @@ public class SoundManager : MonoBehaviour {
     /// </summary>
     /// <param name="vol"></param>
 	public void SetMusicVolume(float vol = .8f){
+		musicVol = vol;
 		musicSource.volume = vol;
 	}
 
