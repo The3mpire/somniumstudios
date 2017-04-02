@@ -221,7 +221,10 @@ MonoBehaviour:
   receptacle: {fileID: 351857548}
   interruptor: {fileID: 0}
   fadeTime: 0
+  snapThreshold: {x: 100, y: 100, z: 100}
+  snapAnswer: {x: 0, y: 0, z: 0}
   hasReceptacle: 1
+  rotateSpeed: 10
 --- !u!33 &37052166
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -672,7 +675,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 00e9d6735382929428e4eea7849d393c, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 00e9d6735382929428e4eea7849d393c, type: 3}
       propertyPath: m_LocalScale.x
@@ -1002,7 +1005,10 @@ MonoBehaviour:
   receptacle: {fileID: 1558473875}
   interruptor: {fileID: 0}
   fadeTime: 0.1
+  snapThreshold: {x: 100, y: 100, z: 100}
+  snapAnswer: {x: 0, y: 0, z: 0}
   hasReceptacle: 1
+  rotateSpeed: 5
 --- !u!1001 &831311707
 Prefab:
   m_ObjectHideFlags: 0
@@ -1858,7 +1864,10 @@ MonoBehaviour:
   receptacle: {fileID: 1187570814}
   interruptor: {fileID: 287810201}
   fadeTime: 0
+  snapThreshold: {x: 100, y: 100, z: 100}
+  snapAnswer: {x: 0, y: 0, z: 0}
   hasReceptacle: 1
+  rotateSpeed: 10
 --- !u!95 &1198268207
 Animator:
   serializedVersion: 3
@@ -2024,7 +2033,10 @@ MonoBehaviour:
   receptacle: {fileID: 0}
   interruptor: {fileID: 0}
   fadeTime: 0
+  snapThreshold: {x: 0, y: 0, z: 0}
+  snapAnswer: {x: 0, y: 0, z: 0}
   hasReceptacle: 0
+  rotateSpeed: 10
 --- !u!4 &1346130179 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4582717360930206, guid: 7e1b9df4594704345a1a7d15cb519c94,
@@ -2220,7 +2232,10 @@ MonoBehaviour:
   receptacle: {fileID: 1414726825}
   interruptor: {fileID: 0}
   fadeTime: 0
+  snapThreshold: {x: 100, y: 100, z: 100}
+  snapAnswer: {x: 0, y: 0, z: 0}
   hasReceptacle: 1
+  rotateSpeed: 10
 --- !u!33 &1392585464
 MeshFilter:
   m_ObjectHideFlags: 0
