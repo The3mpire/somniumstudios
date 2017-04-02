@@ -40,6 +40,7 @@ public class StateMachine : MonoBehaviour {
 
     private void populateDictionaries() {
         figments.Add("policemanA", true);
+        figments.Add("mayor", true);
         memories.Add("StovenPuzzle", true);
     }
 
@@ -53,6 +54,16 @@ public class StateMachine : MonoBehaviour {
 
     public bool isUnsolved(string sceneName) {
         return memories[sceneName];
+    }
+
+    /// <summary>
+    /// Reset the state machine to it's default state
+    /// </summary>
+    public void ResetStateMachine()
+    {
+        figments = new Dictionary<string, bool>();
+        memories = new Dictionary<string, bool>();
+        populateDictionaries();
     }
 
 

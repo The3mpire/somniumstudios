@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class SoundManager : MonoBehaviour {
     public AudioSource fxSource;                   //Drag a reference to the audio source which will play the sound effects.
@@ -15,6 +16,8 @@ public class SoundManager : MonoBehaviour {
     private AudioClip menuSong;
 	[SerializeField]
 	private float musicVol;
+    [SerializeField]
+    private float musicFadeDuration;
 
 
     void Awake() {
@@ -47,46 +50,16 @@ public class SoundManager : MonoBehaviour {
 	public void FadeOutMusic()
 	{
 		musicVol = musicSource.volume;
-		StartCoroutine(FadeMusicOutCo());
+        musicSource.DOFade(0, musicFadeDuration);
 	}
 
 	/// <summary>
 	/// Fades the music in to the previous volume.
 	/// </summary>
 	public void FadeInMusic(){
-		StartCoroutine(FadeMusicInCo());
-	}
+        musicSource.DOFade(musicVol, musicFadeDuration);
 
-	/// <summary>
-	/// Fades the music in. (Coroutine)
-	/// </summary>
-	/// <returns>The music in co.</returns>
-	private IEnumerator FadeMusicInCo(){
-		Debug.Log ("Fading in");
-		while (musicSource.volume < musicVol) {
-			musicSource.volume = Mathf.Lerp(musicSource.volume, musicVol, Time.deltaTime);
-			yield return musicVol;
-		}
-		musicSource.volume = musicVol;
-	}
-
-	/// <summary>
-	/// Fades the music out. (Coroutine)
-	/// </summary>
-	/// <returns>The music out co.</returns>
-	private IEnumerator FadeMusicOutCo()
-	{
-		Debug.Log ("Fading out");
-		musicVol = musicSource.volume;
-
-		while(musicSource.volume > .05F)
-		{
-			musicSource.volume = Mathf.Lerp(musicSource.volume, 0F, Time.deltaTime);
-			yield return 0;
-		}
-		musicSource.volume = 0;
-		//perfect opportunity to insert an on complete hook here before the coroutine exits.
-	}
+    }
 
     /// <summary>
     /// Check if we loaded the mainMenu
