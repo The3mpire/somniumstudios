@@ -2,12 +2,12 @@
 
 namespace Somnium
 {
-    [RequireComponent(typeof(CharacterMovement), typeof(Interactor))]
+    [RequireComponent(typeof(IMovement), typeof(Interactor))]
     public sealed class PlayerController : MonoBehaviour
     {
         private Vector3 savedDirection;
 
-        private CharacterMovement cm;
+        private IMovement movement;
 
         private Interactor inter;
 
@@ -21,7 +21,7 @@ namespace Somnium
 
         void Start()
         {
-            cm = GetComponent<CharacterMovement>();
+            movement = GetComponent<IMovement>();
             inter = GetComponent<Interactor>();
             animator = GetComponent<Animator>();
             animController = GetComponent<AnimationController2D>();
@@ -47,7 +47,7 @@ namespace Somnium
                 else if (input.x > 0)
                     animController.setFacing("Right");
 
-                cm.Move(input);
+                movement.Move(input);
 
                 if (Input.GetButtonDown("Interact"))
                 {

@@ -8,7 +8,7 @@ namespace Somnium
     /// This class is responsible giving a gameobject movement abilities.
     /// </summary>
     [RequireComponent(typeof(CharacterController))]
-    public class Movement : MonoBehaviour
+    public class Movement : MonoBehaviour, IMovement
     {
         //Rigidbodies always react to physics.
         private CharacterController rigidBody;
