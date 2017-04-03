@@ -54,6 +54,10 @@ namespace Somnium
                     inter.Interact(savedDirection);
                 }
             }
+            else
+            {
+                animator.SetBool("isWalking", false);
+            }
         }
 
         /// <summary>

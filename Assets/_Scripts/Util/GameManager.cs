@@ -90,6 +90,7 @@ public class GameManager : MonoBehaviour {
     /// </summary>
     public static void RestartGame() {
         Cursor.visible = false;
+        StateMachine.instance.ResetStateMachine();
         ChangeScene(1);
     }
 

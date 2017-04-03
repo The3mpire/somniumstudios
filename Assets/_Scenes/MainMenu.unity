@@ -200,6 +200,16 @@ Prefab:
       propertyPath: spreadCustomCurve.m_RotationOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114028231516375536, guid: 7e1b9df4594704345a1a7d15cb519c94,
+        type: 2}
+      propertyPath: musicVol
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114028231516375536, guid: 7e1b9df4594704345a1a7d15cb519c94,
+        type: 2}
+      propertyPath: musicFadeDuration
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7e1b9df4594704345a1a7d15cb519c94, type: 2}
   m_IsPrefabParent: 0
@@ -721,52 +731,52 @@ Prefab:
     - target: {fileID: 224000013456706642, guid: ed5214c7404cd4fd7ab2cea5592a6e94,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 224000013456706642, guid: ed5214c7404cd4fd7ab2cea5592a6e94,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224000012247390724, guid: ed5214c7404cd4fd7ab2cea5592a6e94,
         type: 2}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 224000012247390724, guid: ed5214c7404cd4fd7ab2cea5592a6e94,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 224000012247390724, guid: ed5214c7404cd4fd7ab2cea5592a6e94,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224000011624329542, guid: ed5214c7404cd4fd7ab2cea5592a6e94,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 224000011624329542, guid: ed5214c7404cd4fd7ab2cea5592a6e94,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224000010762976508, guid: ed5214c7404cd4fd7ab2cea5592a6e94,
         type: 2}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 224000010762976508, guid: ed5214c7404cd4fd7ab2cea5592a6e94,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 224000010762976508, guid: ed5214c7404cd4fd7ab2cea5592a6e94,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ed5214c7404cd4fd7ab2cea5592a6e94, type: 2}

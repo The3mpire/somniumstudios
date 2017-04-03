@@ -7,7 +7,7 @@ using System;
 namespace Somnium {
 
     public class AnimationController : MonoBehaviour, IInteractable {
-
+      //[SerializeField]
         private Animator anim;
         private int seen;
 
