@@ -12,6 +12,8 @@ namespace Somnium
         //Rigidbodies always react to physics.
         private Rigidbody rigidBody;
 
+        private Collider collider;
+
         /// <summary>
         /// Collision avoidance settings for gameobject.
         /// </summary>
@@ -22,7 +24,8 @@ namespace Somnium
         /// Collision avoidance settings struct
         /// </summary>
         [Serializable]
-        private struct AvoidanceSettings{
+        private struct AvoidanceSettings
+        {
             public bool useCollisionAvoidance;
             public LayerMask layersToAvoid;
             public float distance;
@@ -51,10 +54,11 @@ namespace Somnium
                 }
             }
         }
-        
+
         void Start()
         {
             this.rigidBody = GetComponent<Rigidbody>();
+            this.collider = GetComponent<Collider>();
         }
 
         /// <summary>
@@ -63,7 +67,7 @@ namespace Somnium
         /// <param name="direction">Direction to move in.</param>
         public void Move(Vector3 direction)
         {
-            if(direction == Vector3.zero)
+            if (direction == Vector3.zero)
             {
                 return;
             }
