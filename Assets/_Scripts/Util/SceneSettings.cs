@@ -6,9 +6,6 @@ public class SceneSettings : MonoBehaviour {
     [HideInInspector]
     public static SceneSettings instance;
 
-    [Tooltip("The type of floor on this level")]
-    public levelFloor floor;
-
     [Tooltip("Whether this level is a puzzle or not")]
     public bool isPuzzle;
 
@@ -34,13 +31,6 @@ public class SceneSettings : MonoBehaviour {
         return instance.music;
     }
 
-    /// <summary>
-    /// Get the correct floor type for this scene
-    /// </summary>
-    /// <returns></returns>
-    public static levelFloor GetFloor() {
-        return instance.floor;
-    }
 
     /// <summary>
     /// Get whether this scene is a puzzle or not

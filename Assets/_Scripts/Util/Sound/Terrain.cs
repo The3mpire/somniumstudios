@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Somnium
 {
-    public class Terrain : ITerrain
+    public class Terrain : MonoBehaviour
     {
         /// <summary>
         /// Have all the possible sounds for the terrain loaded here.
@@ -14,25 +14,11 @@ namespace Somnium
         private List<AudioClip> sounds;
 
         /// <summary>
-        /// Can either have a method per sound or...
+        /// Play a random sound from our list
         /// </summary>
-        public void PlayFootstep()
+        public void PlaySound()
         {
-            SoundManager.instance.PlaySingle(sounds[0]);
-        }
-
-        /// <summary>
-        /// ... Have a single method that specifies the sound type, ie Footstep, running, walking, splashing, etc.
-        /// </summary>
-        /// <param name="soundType"></param>
-        public void PlaySound(TerrainSound soundType)
-        {
-            switch (soundType)
-            {
-                case TerrainSound.FOOTSTEP:
-                    SoundManager.instance.PlaySingle(sounds[0]);
-                    break;
-            }
+            SoundManager.instance.PlaySingle(sounds[Random.Range(0, sounds.Count)]);
         }
     }
 }
