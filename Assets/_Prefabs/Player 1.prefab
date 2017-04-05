@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 114987590202864784}
   - component: {fileID: 143128322658366362}
   - component: {fileID: 114526539503027024}
+  - component: {fileID: 114216498520098102}
   m_Layer: 12
   m_Name: Player 1
   m_TagString: Untagged
@@ -40,7 +41,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1445686002333452}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 319.7, y: 10.59, z: 81.67}
+  m_LocalPosition: {x: 319.7, y: 9.31, z: 81.67}
   m_LocalScale: {x: 0.29236412, y: 0.29236406, z: 0.29236406}
   m_Children: []
   m_Father: {fileID: 0}
@@ -63,6 +64,24 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114216498520098102
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1445686002333452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8e918c8ab37e6d47bc93798a0174dda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forestSounds:
+  - {fileID: 8300000, guid: 8408690f3f8d3e74f829ca4a96ad6ffb, type: 3}
+  - {fileID: 8300000, guid: 8f2160345d2638340bd418c876e5871f, type: 3}
+  - {fileID: 8300000, guid: 88ed5f1e303ac59458a1ef692cc71994, type: 3}
+  - {fileID: 8300000, guid: e297d387951a7484697b70e374234f12, type: 3}
+  - {fileID: 8300000, guid: 67c261ce459c9574c99b9438cc45d832, type: 3}
+  citySounds: []
 --- !u!114 &114281246423101646
 MonoBehaviour:
   m_ObjectHideFlags: 1

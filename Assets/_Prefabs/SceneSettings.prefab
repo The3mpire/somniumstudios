@@ -9,46 +9,48 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1996950846764730}
+  m_RootGameObject: {fileID: 1445914397111844}
   m_IsPrefabParent: 1
---- !u!1 &1996950846764730
+--- !u!1 &1445914397111844
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4617002357289232}
-  - component: {fileID: 114487605160732964}
+  - component: {fileID: 4578699932209796}
+  - component: {fileID: 114631081570830530}
   m_Layer: 0
-  m_Name: SceneMusic
+  m_Name: SceneSettings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4617002357289232
+--- !u!4 &4578699932209796
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1996950846764730}
+  m_GameObject: {fileID: 1445914397111844}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -25.949434, y: 1.4626803, z: 72.74269}
+  m_LocalPosition: {x: -9.57, y: 13.94, z: -1.7246094}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114487605160732964
+--- !u!114 &114631081570830530
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1996950846764730}
+  m_GameObject: {fileID: 1445914397111844}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1e13938627ef4c4cb8c6db93fce2469, type: 3}
+  m_Script: {fileID: 11500000, guid: 100255b524bdf844b9a8991dbc2ad9cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  floor: 0
+  isPuzzle: 0
   music: {fileID: 0}

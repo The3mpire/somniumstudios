@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class StateMachine : MonoBehaviour {
 
-    [Tooltip("don't touch this")]
+    [HideInInspector]
     public static StateMachine instance = null;
 
 	[Tooltip("whether or not the player was just in a puzzle scene")]
@@ -17,8 +17,7 @@ public class StateMachine : MonoBehaviour {
     private Dictionary<string, bool> memories;
 
     private static string savePath;
-
-
+    
     void Awake() {
         if (instance == null)
             instance = this;
