@@ -17,9 +17,17 @@ namespace Somnium
 
         void OnTriggerEnter()
         {
-            DialogManager.Instance.ProfileSprite = profileSprite;
-            DialogManager.Instance.StartDialog(dialogFilePath);
-            this.gameObject.SetActive(Repeatable);
+            if (!StateMachine.instance.isUnsolved("StovenPuzzle"))
+            {
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                DialogManager.Instance.ProfileSprite = profileSprite;
+                DialogManager.Instance.StartDialog(dialogFilePath);
+                this.gameObject.SetActive(Repeatable);
+
+            }
         }
     }
 }
