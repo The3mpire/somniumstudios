@@ -32,6 +32,7 @@ public class PuzzleManager : MonoBehaviour {
     /// have been placed then change back to the original scene and out of the puzzle
     /// </summary>
     public static void incrementPiecesPlaced() {
+        Debug.Log(piecesPlaced + 1);
         piecesPlaced++;
 
         if(piecesPlaced == instance.pieceCount) {

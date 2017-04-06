@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 65075627630498360}
   - component: {fileID: 95642861201246410}
   - component: {fileID: 114845713288713328}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Mayor
   m_TagString: Untagged
   m_Icon: {fileID: 0}

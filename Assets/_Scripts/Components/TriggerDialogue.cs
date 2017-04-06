@@ -7,6 +7,12 @@ namespace Somnium
     public class TriggerDialogue : MonoBehaviour
     {
         [SerializeField]
+        private bool beforePuzzleSolve;
+
+        [SerializeField]
+        private string puzzleName;
+
+        [SerializeField]
         private string dialogFilePath;
 
         [SerializeField]
@@ -17,17 +23,44 @@ namespace Somnium
 
         void OnTriggerEnter()
         {
-            if (!StateMachine.instance.isUnsolved("StovenPuzzle"))
+            // if before puzzle deactivate the object when the puzzle is solved
+            if (beforePuzzleSolve)
             {
-                gameObject.SetActive(false);
+                if (!StateMachine.instance.isUnsolved(puzzleName))
+                {
+                    gameObject.SetActive(false);
+                }
+                else
+                {
+                    DialogManager.Instance.ProfileSprite = profileSprite;
+                    DialogManager.Instance.StartDialog(dialogFilePath);
+                    this.gameObject.SetActive(Repeatable);
+
+                }
             }
             else
             {
-                DialogManager.Instance.ProfileSprite = profileSprite;
-                DialogManager.Instance.StartDialog(dialogFilePath);
-                this.gameObject.SetActive(Repeatable);
+                if (!StateMachine.instance.isUnsolved(puzzleName))
+                {
+                    DialogManager.Instance.ProfileSprite = profileSprite;
+                    DialogManager.Instance.StartDialog(dialogFilePath);
 
+                    if (gameObject.GetComponentInParent<NPCMovement>() != null)
+                    {
+                        StartCoroutine(Wait());
+                    }
+                    else
+                    {
+                        this.gameObject.SetActive(Repeatable);
+                    }
+                }
             }
+        }
+
+        private IEnumerator Wait()
+        {
+            yield return new WaitWhile(()=>{ return DialogManager.Instance.RunningDisplayRoutine; });
+                        gameObject.GetComponentInParent<NPCMovement>().MoveCharacter();
         }
     }
 }

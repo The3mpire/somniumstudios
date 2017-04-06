@@ -182,7 +182,7 @@ public class Draggable : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     private bool WithinThreshold() {
-        Debug.Log("Threshold");
+       // Debug.Log("Threshold");
         //Debug.Log("x " + (gameObject.transform.rotation.eulerAngles.x));
         //Debug.Log("y " + (gameObject.transform.rotation.eulerAngles.y));
         //Debug.Log("y " + (gameObject.transform.rotation.eulerAngles.z));
@@ -196,13 +196,13 @@ public class Draggable : MonoBehaviour {
         // if any of the axis need to be checked, assign them, else assign the answer
         Vector3 from = new Vector3(xCheck ? gameObject.transform.rotation.eulerAngles.x : 0.1f, yCheck ? gameObject.transform.rotation.eulerAngles.y : 0.1f, zCheck ? gameObject.transform.rotation.eulerAngles.z : 0.1f);
 
-        Debug.Log("from " + from);
+        //Debug.Log("from " + from);
 
         Vector3 to = new Vector3(xCheck ? snapAnswer.x : 0.1f, yCheck ? snapAnswer.y : 0.1f, zCheck ? snapAnswer.z : 0.1f);
 
-        Debug.Log("to " + to);
+        //Debug.Log("to " + to);
 
-        Debug.Log(Mathf.Abs(Vector3.Angle(from, to)));
+        //Debug.Log(Mathf.Abs(Vector3.Angle(from, to)));
 
         // check if we're in the threshold
         if (Mathf.Abs(Vector3.Angle(from, to)) <= snapThreshold) {
@@ -255,7 +255,7 @@ public class Draggable : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     private bool ReceptacleContains() {
-        Debug.Log("In receptable contains");
+       // Debug.Log("In receptable contains");
         //check the x
         if (gameObject.transform.position.x <= (receptacle.transform.position.x + receptacle.GetComponent<BoxCollider>().size.x / 2)
              && gameObject.transform.position.x >= (receptacle.transform.position.x - receptacle.GetComponent<BoxCollider>().size.x / 2)
