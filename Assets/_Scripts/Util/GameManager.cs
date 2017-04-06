@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour {
     /// </summary>
     /// <param name="levelIndex"> the index in the build of the scene to change to </param>
     public static void ChangeScene(int levelIndex) {
-        // TODO fix this awful hardcoded bullshit fuck you Karla you stupid bitch
+        // TODO fix this awful hardcoded bullshit
         // On puzzles and the main menu, dont hid the cursor
         if (levelIndex == 3 || levelIndex == 0)
         {
