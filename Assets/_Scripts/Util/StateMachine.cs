@@ -19,6 +19,8 @@ namespace Somnium
         private Dictionary<string, bool> figments;
         private Dictionary<string, bool> memories;
 
+        private Dictionary<string, int> flags;
+
         private static string savePath;
 
         void Awake()
@@ -40,6 +42,7 @@ namespace Somnium
         {
             figments = new Dictionary<string, bool>();
             memories = new Dictionary<string, bool>();
+            flags = new Dictionary<string, int>();
             populateDictionaries();
         }
 
@@ -48,16 +51,21 @@ namespace Somnium
             figments.Add("policemanA", true);
             figments.Add("mayor", true);
             memories.Add("StovenPuzzle", true);
+            flags.Add("StovenPuzzle", 0);
         }
 
         public void updateMemDictionary(string key, bool state)
         {
             memories[key] = state;
+            //Don't want to break anything, so just add the key to the flag dictionary.
+            flags[key] = Convert.ToInt32(!state);
         }
 
         public void updateFigDictionary(string key, bool state)
         {
             figments[key] = state;
+            //Don't want to break anything, so just add the key to the flag dictionary.
+            flags[key] = Convert.ToInt32(!state);
         }
 
         public bool isUnsolved(string sceneName)
@@ -72,17 +80,24 @@ namespace Somnium
         {
             figments = new Dictionary<string, bool>();
             memories = new Dictionary<string, bool>();
+            flags = new Dictionary<string, int>();
             populateDictionaries();
         }
 
+        /// <summary>
+        /// This is part of the DialogState interface, DialogManager uses it to set flags when choices are made.
+        /// </summary>
         public void SetFlag(string flagName, int flagValue)
         {
-            return;
+            flags[flagName] = flagValue;
         }
 
+        /// <summary>
+        /// DialogManager uses this to check whether or not to display certain dialogs.
+        /// </summary>
         public int GetFlag(string flagName)
         {
-            return 1;
+            return flags[flagName];
         }
 
 

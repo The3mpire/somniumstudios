@@ -272,7 +272,7 @@ namespace Somnium
                     if (Input.GetButton(nextButtonName))
                     {
                         dialogSettings.textBox.text = page;
-                        
+                        yield return new WaitUntil(() => { return !Input.GetButton(nextButtonName); });
                         break;
                     } else
                     {

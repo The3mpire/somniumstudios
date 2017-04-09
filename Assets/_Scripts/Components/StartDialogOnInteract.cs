@@ -16,12 +16,6 @@ namespace Somnium
         public void Interact()
         {
             Cursor.visible = true;
-
-            // we've solved the puzzle, grab different dialog
-            if (!StateMachine.instance.isUnsolved("StovenPuzzle")) {
-                dialogFilePath += "Solved";
-            }
-
             DialogManager.Instance.ProfileSprite = profileSprite;
             DialogManager.Instance.StartDialog(dialogFilePath);
         }

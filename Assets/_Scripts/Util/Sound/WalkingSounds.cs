@@ -19,7 +19,11 @@ namespace Somnium {
 
 
             if (Physics.Raycast(gameObject.transform.position, Vector3.down, out hit, 8)) {
-                hit.collider.gameObject.GetComponent<Terrain>().PlaySound();
+                Terrain terrain = hit.collider.gameObject.GetComponent<Terrain>();
+                if (terrain)
+                {
+                    terrain.PlaySound();
+                }
             }
 
             //TODO or play a default sound if there is no specified terrain below
