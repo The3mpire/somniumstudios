@@ -246,9 +246,49 @@ namespace Somnium
         /// <param name="dialogSettings">DialogSettings struct to use for controlling the display of the text.</param>
         IEnumerator DisplayText(string text, DialogSettings dialogSettings)
         {
+            //Set the panel to active so the panel that contains the text and profile picture are visible.
             dialogSettings.dialogPanel.gameObject.SetActive(true);
+
+            //Reset the text in the textbox.
             dialogSettings.textBox.text = "";
 
+            //Split the text up based on the page delimiter.
+            Queue<string> textQueue = new Queue<string>(text.Split(dialogSettings.pageDelimiter));
+
+            int currentPage = 0;
+
+            while (textQueue.Count != 0)
+            {
+                string page = textQueue.Dequeue();
+
+                if(page.Length> dialogSettings.charsPerBox)
+                {
+                    Debug.LogError("There are too many characters in page " + currentPage + " set to be displayed. Consider splitting the text onto a new page.");
+                }
+
+                for(int i = 0; i < page.Length; i++)
+                {
+                    dialogSettings.nextIndicator.gameObject.SetActive(false);
+                    if (Input.GetButton(nextButtonName))
+                    {
+                        dialogSettings.textBox.text = page;
+                        
+                        break;
+                    } else
+                    {
+                        dialogSettings.textBox.text += page[i];
+                    }
+                    yield return new WaitForSeconds(1 / dialogSettings.charRate);
+                }
+
+                //Wait for player to press interact buton before continuing with next page.
+                dialogSettings.nextIndicator.gameObject.SetActive(true);
+                yield return StartCoroutine(WaitForPlayerInput(dialogSettings));
+                currentPage++;
+            }
+
+
+            /*
             for (int i =0; i < text.Length; i++)
             {
                 char c = text[i];
@@ -266,8 +306,10 @@ namespace Somnium
                     yield return new WaitForSeconds(1 / dialogSettings.charRate);
                 }
             }
-            dialogSettings.nextIndicator.gameObject.SetActive(true);
-            yield return new WaitUntil(() => Input.GetButtonDown(nextButtonName));
+            */
+
+            //dialogSettings.nextIndicator.gameObject.SetActive(true);
+            //yield return new WaitUntil(() => Input.GetButtonDown(nextButtonName));
             dialogSettings.nextIndicator.gameObject.SetActive(false);
             dialogSettings.textBox.text = "";
             dialogSettings.dialogPanel.gameObject.SetActive(false);
@@ -285,6 +327,7 @@ namespace Somnium
             {
                 NewPageEvent();
             }
+            yield return new WaitUntil(() => { return !Input.GetButton(nextButtonName); });
         }
 
         /// <summary>
