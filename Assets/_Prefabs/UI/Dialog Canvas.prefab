@@ -265,6 +265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7beb32cc27753b24cb93c8a336eb563c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stateMachineTagName: StateMachine
   dialogCanvas: {fileID: 223616063854559372}
   dialogSettings:
     dialogPanel: {fileID: 224110280360930046}

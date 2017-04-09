@@ -11,14 +11,12 @@ namespace Somnium
     public class DialogManager : MonoBehaviour
     {
 
-#region Member Vars
+        #region Member Vars
 
         /// <summary>
         /// The instance of the dialog manager, provides access to manager methods and properties.
         /// </summary>
         public static DialogManager Instance { get; private set; }
-
-        //private Dialog currentDialog;
 
         /// <summary>
         /// Whether or not the manager is currently running a DisplayDialog routine.
@@ -26,10 +24,16 @@ namespace Somnium
         /// </summary>
         public bool RunningDisplayRoutine { get; private set; }
 
+        private IDialogState state;
+
         /// <summary>
         /// dialogs that the manager is currently working on displaying.
         /// </summary>
         private Queue<Dialog> dialogQueue = new Queue<Dialog>();
+
+        [SerializeField]
+        [Tooltip("This tag name is used to find the statemachine in a scene")]
+        private string stateMachineTagName;
 
         [SerializeField]
         [Tooltip("The canvas containing the dialog canvas.")]
@@ -54,11 +58,11 @@ namespace Somnium
             public Image profileImage;
 
             [Tooltip("Max amount of chars to display in textbox at a single time.")]
-            [Range(1,512)]
+            [Range(1, 512)]
             public int charsPerBox;
 
             [Tooltip("Rate at which characters appear in the textbox")]
-            [Range(1,60)]
+            [Range(1, 60)]
             public float charRate;
 
             public char pageDelimiter;
@@ -106,7 +110,9 @@ namespace Somnium
             }
         }
 
-#endregion
+        #endregion
+
+        #region Initialization
 
         void Awake()
         {
@@ -120,7 +126,19 @@ namespace Somnium
             }
             DontDestroyOnLoad(gameObject);
             dialogCanvas.enabled = false;
+            IDialogState s = GameObject.FindGameObjectWithTag(stateMachineTagName).GetComponent<IDialogState>();
+            if (s != null)
+            {
+                state = s;
+            } else
+            {
+                Debug.LogError("DialogManager could not find a IDialogState component on the gameobject specified by the tag name: " + stateMachineTagName);
+            }
         }
+
+        #endregion
+
+        #region Public Methods
 
         /// <summary>
         /// Starts a dialog interaction using dialog data in the specified file starting at the dialog with the given dialog ID.
@@ -159,6 +177,10 @@ namespace Somnium
             }
         }
 
+        #endregion
+
+        #region Display Routines
+
         /// <summary>
         /// Waits until the dialog manager has finished the Display Dialog routine, then starts the specified dialog.
         /// </summary>
@@ -186,16 +208,37 @@ namespace Somnium
             while (dialogQueue.Count > 0)
             {
                 Dialog d = dialogQueue.Dequeue();
-                yield return StartCoroutine(DisplayText(d.DialogText, dialogSettings));
-                if (d.Choices != null && d.Choices.Count > 0)
+                Dialog failDialog;
+                CheckConditions(d.Conditions, out failDialog);
+                d = failDialog != null ? failDialog : d;
+                if (true)
                 {
-                    yield return StartCoroutine(DisplayChoices(d.Choices, choiceSettings));
+                    yield return StartCoroutine(DisplayText(d.DialogText, dialogSettings));
+                    if (d.Choices != null && d.Choices.Count > 0)
+                    {
+                        yield return StartCoroutine(DisplayChoices(d.Choices, choiceSettings));
+                    }
                 }
             }
             if (c != null) c.ControlsEnabled = true;
             dialogCanvas.enabled = false;
             RunningDisplayRoutine = false;
         }
+
+        private bool CheckConditions(List<Condition> conditions, out Dialog failDialog)
+        {
+            foreach (Condition c in conditions)
+            {
+                if (state.GetFlag(c.Flag) != c.Value)
+                {
+                    failDialog = c.FailDialog;
+                    return false;
+                }
+            }
+            failDialog = null;
+            return true;
+        }
+
 
         /// <summary>
         /// Handles displaying the text of a dialog.
@@ -210,9 +253,9 @@ namespace Somnium
             int i = 0;
             dialogSettings.textBox.text = "";
 
-            foreach(char c in text)
+            foreach (char c in text)
             {
-                if(c.Equals( dialogSettings.pageDelimiter))
+                if (c.Equals(dialogSettings.pageDelimiter))
                 {
                     yield return StartCoroutine(WaitForPlayerInput(dialogSettings));
                     i = 0;
@@ -262,7 +305,7 @@ namespace Somnium
             Vector2 buttonPosition = choiceSettings.initPosition;
             bool choiceSelected = false;
             List<Button> buttons = new List<Button>();
-            for(int i = 0; i < choices.Count; i++)
+            for (int i = 0; i < choices.Count; i++)
             {
                 Choice choice = choices[i];
                 //Inefficient, should be object pooling at creation time of DialogManager, oh well.
@@ -276,7 +319,7 @@ namespace Somnium
                     NewPageEvent();
                 }
 
-                b.onClick.AddListener(()=> {
+                b.onClick.AddListener(() => {
                     choiceSelected = true;
                     if (ChoiceSelectedEvent != null)
                     {
@@ -288,7 +331,7 @@ namespace Somnium
                 buttonPosition = new Vector2(0, buttonPosition.y - r.height);
             }
             yield return new WaitUntil(() => { return choiceSelected; });
-            foreach(Button b in buttons)
+            foreach (Button b in buttons)
             {
                 DestroyImmediate(b.gameObject);
             }
@@ -303,13 +346,18 @@ namespace Somnium
         private void ChoiceSelectionListener(Choice c)
         {
             Dialog d = c.NextDialog;
+            string flag = c.Flag;
+            int value = c.Value;
+            state.SetFlag(flag, value);
             if (d != null)
             {
                 dialogQueue.Enqueue(d);
             }
         }
 
+        #endregion
 
+        #region Data Loading
 
         /// <summary>
         /// Reads in a dialog file and returns a root Dialog Node.
@@ -340,7 +388,11 @@ namespace Somnium
                 JsonDialog item = data[i];
                 foreach (JsonChoice choice in item.Choices)
                 {
-                    dialogs[i].Choices.Add(new Choice(choice.Text, choice.Value, dialogs[choice.NextDialog]));
+                    dialogs[i].Choices.Add(new Choice(choice.Text, choice.Flag, choice.Value, dialogs[choice.NextDialog]));
+                }
+                foreach (JsonCondition condition in item.Conditions)
+                {
+                    dialogs[i].Conditions.Add(new Condition(condition.Flag, condition.Value, dialogs[condition.FailDialog]));
                 }
             }
             return dialogs;
@@ -351,6 +403,10 @@ namespace Somnium
             string json = JsonConvert.SerializeObject(data);
             File.WriteAllText(path, json);
         }
+
+        #endregion
+
+        #region Data Types
 
         /// <summary>
         /// Contains utility methods for searching through a Dialog graph.
@@ -429,14 +485,16 @@ namespace Somnium
         {
             public int Id { get; set; }
             public string DialogText { get; set; }
-
             public List<JsonChoice> Choices { get; private set; }
+            public List<JsonCondition> Conditions { get; private set; }
 
-            public JsonDialog(int id, string text, JsonChoice[] choices)
+            public JsonDialog(int id, string text, JsonChoice[] choices, JsonCondition[] conditions)
             {
                 this.Id = id;
                 this.DialogText = text;
                 this.Choices = new List<JsonChoice>(choices);
+                this.Conditions = new List<JsonCondition>(conditions);
+
             }
 
             public int CompareTo(int other)
@@ -451,15 +509,24 @@ namespace Somnium
         internal sealed class JsonChoice
         {
             public string Text { get; set; }
-            public object Value { get; set; }
+            public string Flag { get; set; }
+            public int Value { get; set; }
             public int NextDialog { get; set; }
 
-            public JsonChoice(string text, object value, int nextDialog)
+            public JsonChoice(string text, string flag, int value, int nextDialog)
             {
                 this.Text = text;
+                this.Flag = flag;
                 this.Value = value;
                 this.NextDialog = nextDialog;
             }
+        }
+
+        internal sealed class JsonCondition
+        {
+            public string Flag { get; set; }
+            public int Value { get; set; }
+            public int FailDialog { get; set; }
         }
 
         /// <summary>
@@ -482,13 +549,16 @@ namespace Somnium
             /// </summary>
             public List<Choice> Choices { get; private set; }
 
-            public Dialog(int id, string text) : this(id, text, new Choice[0]) { }
+            public List<Condition> Conditions { get; private set; }
 
-            public Dialog(int id, string text, Choice[] choices)
+            public Dialog(int id, string text) : this(id, text, new Choice[0], new Condition[0]) { }
+
+            public Dialog(int id, string text, Choice[] choices, Condition[] conditions)
             {
                 this.Id = id;
                 this.DialogText = text;
                 this.Choices = new List<Choice>(choices);
+                this.Conditions = new List<Condition>(conditions);
             }
 
             public int CompareTo(int other)
@@ -504,22 +574,49 @@ namespace Somnium
             /// </summary>
             public string Text { get; set; }
 
+            public string Flag { get; set; }
+
             /// <summary>
             /// Value of the Choice. Can be any primitive object.
             /// </summary>
-            public object Value { get; set; }
+            public int Value { get; set; }
 
             /// <summary>
             /// Dialog to display when this choice is chosen.
             /// </summary>
             public Dialog NextDialog { get; set; }
 
-            public Choice(string text, object value, Dialog nextDialog)
+            public Choice(string text, string flag, int value, Dialog nextDialog)
             {
                 this.Text = text;
+                this.Flag = flag;
                 this.Value = value;
                 this.NextDialog = nextDialog;
             }
         }
+
+        internal sealed class Condition
+        {
+            public string Flag { get; set; }
+            public int Value { get; set; }
+            public Dialog FailDialog { get; set; }
+
+            public Condition(string flag, int value, Dialog failDialog)
+            {
+                this.Flag = flag;
+                this.Value = value;
+                this.FailDialog = failDialog;
+            }
+        }
+
+        #endregion
+    }
+
+    public interface IDialogState {
+
+        void SetFlag(string flagName, int flagValue);
+
+        int GetFlag(string flagName);
+
     }
 }
