@@ -211,13 +211,10 @@ namespace Somnium
                 Dialog failDialog;
                 CheckConditions(d.Conditions, out failDialog);
                 d = failDialog != null ? failDialog : d;
-                if (true)
+                yield return StartCoroutine(DisplayText(d.DialogText, dialogSettings));
+                if (d.Choices != null && d.Choices.Count > 0)
                 {
-                    yield return StartCoroutine(DisplayText(d.DialogText, dialogSettings));
-                    if (d.Choices != null && d.Choices.Count > 0)
-                    {
-                        yield return StartCoroutine(DisplayChoices(d.Choices, choiceSettings));
-                    }
+                    yield return StartCoroutine(DisplayChoices(d.Choices, choiceSettings));
                 }
             }
             if (c != null) c.ControlsEnabled = true;
@@ -250,24 +247,22 @@ namespace Somnium
         IEnumerator DisplayText(string text, DialogSettings dialogSettings)
         {
             dialogSettings.dialogPanel.gameObject.SetActive(true);
-            int i = 0;
             dialogSettings.textBox.text = "";
 
-            foreach (char c in text)
+            for (int i =0; i < text.Length; i++)
             {
+                char c = text[i];
                 if (c.Equals(dialogSettings.pageDelimiter))
                 {
                     yield return StartCoroutine(WaitForPlayerInput(dialogSettings));
-                    i = 0;
-                } else
+                }
+                else
                 {
                     if (i > dialogSettings.charsPerBox)
                     {
                         yield return StartCoroutine(WaitForPlayerInput(dialogSettings));
-                        i = 0;
                     }
                     dialogSettings.textBox.text += c;
-                    i++;
                     yield return new WaitForSeconds(1 / dialogSettings.charRate);
                 }
             }
