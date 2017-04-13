@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465934, g: 0.49642956, b: 0.57482487, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -215,17 +215,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f44ec00ae5d0043bdbc4c3dae1d309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thresholdCollider: {fileID: 0}
   sfx: {fileID: 8300000, guid: 4e9ce89d9e841d149bdc21d022db4d88, type: 3}
   isDraggable: 1
   hasInterruptor: 0
   receptacle: {fileID: 351857548}
   interruptor: {fileID: 0}
   fadeTime: 0
-  xCheck: 1
-  yCheck: 1
-  zCheck: 0
-  snapThreshold: 40
-  snapAnswer: {x: 0.1, y: 0.1, z: 0.1}
   hasReceptacle: 1
   rotateSpeed: 10
 --- !u!33 &37052166
@@ -954,6 +950,10 @@ Transform:
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: 820e3cab779bcd345a5142e566709c10, type: 3}
   m_PrefabInternal: {fileID: 1851519666}
+--- !u!4 &821114300 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 400000, guid: 820e3cab779bcd345a5142e566709c10, type: 3}
+  m_PrefabInternal: {fileID: 1851519666}
 --- !u!54 &821114301
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -994,17 +994,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f44ec00ae5d0043bdbc4c3dae1d309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thresholdCollider: {fileID: 1369646808}
   sfx: {fileID: 8300000, guid: 4e9ce89d9e841d149bdc21d022db4d88, type: 3}
   isDraggable: 1
   hasInterruptor: 0
   receptacle: {fileID: 1558473875}
   interruptor: {fileID: 0}
   fadeTime: 0.1
-  xCheck: 1
-  yCheck: 1
-  zCheck: 1
-  snapThreshold: 30
-  snapAnswer: {x: 1.987, y: 11.181, z: 0}
   hasReceptacle: 1
   rotateSpeed: 5
 --- !u!1001 &831311707
@@ -1723,7 +1719,7 @@ GameObject:
   - component: {fileID: 1187570817}
   - component: {fileID: 1187570815}
   m_Layer: 0
-  m_Name: r
+  m_Name: WheelReceptacle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1946,17 +1942,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f44ec00ae5d0043bdbc4c3dae1d309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thresholdCollider: {fileID: 0}
   sfx: {fileID: 8300000, guid: 4e9ce89d9e841d149bdc21d022db4d88, type: 3}
   isDraggable: 1
   hasInterruptor: 1
   receptacle: {fileID: 1187570814}
   interruptor: {fileID: 287810201}
   fadeTime: 0
-  xCheck: 1
-  yCheck: 0
-  zCheck: 1
-  snapThreshold: 45
-  snapAnswer: {x: 88.14301, y: 0.1, z: 0.1}
   hasReceptacle: 1
   rotateSpeed: 10
 --- !u!95 &1198268207
@@ -2118,17 +2110,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f44ec00ae5d0043bdbc4c3dae1d309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thresholdCollider: {fileID: 0}
   sfx: {fileID: 0}
   isDraggable: 1
   hasInterruptor: 0
   receptacle: {fileID: 0}
   interruptor: {fileID: 0}
   fadeTime: 0
-  xCheck: 0
-  yCheck: 0
-  zCheck: 0
-  snapThreshold: 0
-  snapAnswer: {x: 0, y: 0, z: 0}
   hasReceptacle: 0
   rotateSpeed: 10
 --- !u!4 &1346130179 stripped
@@ -2225,6 +2213,55 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1366700256}
   m_Mesh: {fileID: 4300000, guid: 193a69c56a8615948a8f558d6f1d2cf0, type: 3}
+--- !u!1 &1369646807
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1369646810}
+  - component: {fileID: 1369646809}
+  - component: {fileID: 1369646808}
+  m_Layer: 0
+  m_Name: ClockCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &1369646808
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1369646807}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.23240492, y: 0.10551675, z: 4.9167395}
+  m_Center: {x: 0.022701077, y: -0.003525678, z: 0.35768935}
+--- !u!33 &1369646809
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1369646807}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1369646810
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1369646807}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.00000454, y: -0.0000014126, z: 0.00015359}
+  m_LocalScale: {x: 0.0098, y: 0.0196, z: 0.0051383586}
+  m_Children: []
+  m_Father: {fileID: 821114300}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1392585458
 GameObject:
   m_ObjectHideFlags: 0
@@ -2320,17 +2357,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f44ec00ae5d0043bdbc4c3dae1d309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thresholdCollider: {fileID: 0}
   sfx: {fileID: 8300000, guid: 4e9ce89d9e841d149bdc21d022db4d88, type: 3}
   isDraggable: 1
   hasInterruptor: 0
   receptacle: {fileID: 1414726825}
   interruptor: {fileID: 0}
   fadeTime: 0
-  xCheck: 1
-  yCheck: 1
-  zCheck: 0
-  snapThreshold: 40
-  snapAnswer: {x: 0.1, y: 0.1, z: 0.1}
   hasReceptacle: 1
   rotateSpeed: 10
 --- !u!33 &1392585464
@@ -2684,8 +2717,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5.718706, y: 2.3363087, z: 47.674232}
-  m_Center: {x: 0.05769448, y: 0.13687338, z: 0.84638804}
+  m_Size: {x: 5.856504, y: 2.5663068, z: 47.674232}
+  m_Center: {x: 0.09141606, y: -0.023328945, z: 0.84638804}
 --- !u!4 &1558473877
 Transform:
   m_ObjectHideFlags: 0
@@ -2977,15 +3010,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400000, guid: 820e3cab779bcd345a5142e566709c10, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.23807716
+      value: -0.83
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 820e3cab779bcd345a5142e566709c10, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 33.862625
+      value: 0.86
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 820e3cab779bcd345a5142e566709c10, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.2909753
+      value: -1.24
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 820e3cab779bcd345a5142e566709c10, type: 3}
       propertyPath: m_LocalRotation.x

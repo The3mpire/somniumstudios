@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class Draggable : MonoBehaviour {
 
+	[SerializeField]
+	private BoxCollider thresholdCollider;
+
     [SerializeField]
     [Tooltip("Sound effect for the draggable object")]
     private AudioClip sfx;
@@ -38,24 +41,6 @@ public class Draggable : MonoBehaviour {
     private bool isClicked;
 
     [SerializeField]
-    [Tooltip("Check this Axis in the snap")]
-    private bool xCheck;
-    [SerializeField]
-    [Tooltip("Check this Axis in the snap")]
-    private bool yCheck;
-    [SerializeField]
-    [Tooltip("Check this Axis in the snap")]
-    private bool zCheck;
-
-    [SerializeField]
-    [Tooltip("The amount of degrees the object can be off from the answer for each angle")]
-    private float snapThreshold = 20;
-
-    [SerializeField]
-    [Tooltip("The perfect rotation to snap the object")]
-    private Vector3 snapAnswer = new Vector3(0.1f, 0.1f, 0.1f);
-
-    [SerializeField]
     private bool hasReceptacle;
 
     [SerializeField]
@@ -70,56 +55,29 @@ public class Draggable : MonoBehaviour {
             Vector3 input = new Vector3(Input.GetAxis("Vertical"), Input.GetAxis("Horizontal"), Input.GetAxis("Diagonal"));
 
             //rotate about the x
-            if (input.x > 0) {
-                //transform.rotation = Quaternion.SlerpUnclamped(transform.rotation, new Quaternion(transform.rotation.x + rotateSpeed, transform.rotation.y, transform.rotation.z, transform.rotation.w), Time.deltaTime * rotateSpeed);
-
-                //transform.rotation = Quaternion.AngleAxis(transform.rotation.x + rotateSpeed, Vector3.right);
-                // transform.rotation = Quaternion.FromToRotation(transform.rotation.eulerAngles, new Vector3(0, this.transform.rotation.y, this.transform.rotation.z));
-                //transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(this.transform.rotation.x, 0, 0), Time.deltaTime * rotateSpeed);
+			if (input.x > 0){
                 transform.Rotate(new Vector3(1, 0, 0), rotateSpeed);
             }
             else if (input.x < 0) {
-                //transform.rotation = Quaternion.SlerpUnclamped(transform.rotation, new Quaternion(transform.rotation.x - rotateSpeed, transform.rotation.y, transform.rotation.z, transform.rotation.w), Time.deltaTime * rotateSpeed);
-                //transform.rotation = Quaternion.AngleAxis(transform.rotation.x + rotateSpeed, Vector3.left);
-                //  transform.rotation = Quaternion.FromToRotation(transform.rotation.eulerAngles, new Vector3(0, this.transform.rotation.y, this.transform.rotation.z));
-                //transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(this.transform.rotation.x, 0, 0), -Time.deltaTime * rotateSpeed);
                 transform.Rotate(new Vector3(1, 0, 0), -rotateSpeed);
             }
 
             //rotate about the y
             if (input.y > 0) {
-                //transform.rotation = Quaternion.SlerpUnclamped(transform.rotation, new Quaternion(transform.rotation.x, transform.rotation.y + rotateSpeed, transform.rotation.z, transform.rotation.w), Time.deltaTime * rotateSpeed);
-                //transform.rotation = Quaternion.AngleAxis(transform.rotation.y + rotateSpeed, Vector3.up);
-                // transform.rotation = Quaternion.FromToRotation(transform.rotation.eulerAngles, new Vector3(this.transform.rotation.x, 0, this.transform.rotation.z));
-                //transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, this.transform.rotation.y, 0), Time.deltaTime * rotateSpeed);
                 transform.Rotate(new Vector3(0, 1, 0), rotateSpeed);
             }
             else if (input.y < 0) {
-                //transform.rotation = Quaternion.SlerpUnclamped(transform.rotation, new Quaternion(transform.rotation.x, transform.rotation.y - rotateSpeed, transform.rotation.z, transform.rotation.w), Time.deltaTime * rotateSpeed);
-                //transform.rotation = Quaternion.AngleAxis(transform.rotation.y + rotateSpeed, Vector3.down);
-                // transform.rotation = Quaternion.FromToRotation(transform.rotation.eulerAngles, new Vector3(this.transform.rotation.x, 0, this.transform.rotation.z));
-                //transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, this.transform.rotation.y, 0), -Time.deltaTime * rotateSpeed);
                 transform.Rotate(new Vector3(0, 1, 0), -rotateSpeed);
             }
 
             //rotate about the z
             if (input.z > 0) {
-                //transform.rotation = Quaternion.SlerpUnclamped(transform.rotation, new Quaternion(transform.rotation.x, transform.rotation.y, transform.rotation.z + rotateSpeed, transform.rotation.w), Time.deltaTime * rotateSpeed);
-                //transform.rotation = Quaternion.AngleAxis(transform.rotation.z + rotateSpeed, Vector3.forward);
-                //transform.rotation = Quaternion.FromToRotation(transform.rotation.eulerAngles, new Vector3(this.transform.rotation.x, this.transform.rotation.y, 0));
-                //transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, this.transform.rotation.z), Time.deltaTime * rotateSpeed);
                 transform.Rotate(new Vector3(0, 0, 1), rotateSpeed);
             }
             else if (input.z < 0) {
-                //transform.rotation = Quaternion.SlerpUnclamped(transform.rotation, new Quaternion(transform.rotation.x, transform.rotation.y, transform.rotation.z - rotateSpeed, transform.rotation.w), Time.deltaTime * rotateSpeed);
-                //transform.rotation = Quaternion.AngleAxis(transform.rotation.z + rotateSpeed, Vector3.back);
-                //transform.rotation = Quaternion.FromToRotation(transform.rotation.eulerAngles, new Vector3(this.transform.rotation.x, this.transform.rotation.y, 0));
-                //transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, this.transform.rotation.z), -Time.deltaTime * rotateSpeed);
                 transform.Rotate(new Vector3(0, 0, 1), -rotateSpeed);
             }
-        }
-
-
+      	}
     }
 
 
@@ -175,15 +133,13 @@ public class Draggable : MonoBehaviour {
     /// </summary>
     void Snap() {
         //  Play the sound effect
-        // SoundManager.instance.PlaySingle(sfx, 1f);
+        SoundManager.instance.PlaySingle(sfx, 1f);
 
         // Make the object kinematic so it won't fall
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
 
         Transform parentLocation = receptacle.transform;
         transform.position = parentLocation.position;
-
-        //transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
 
         isDraggable = false;
 
@@ -199,85 +155,9 @@ public class Draggable : MonoBehaviour {
         // Disable Renderers so the 3D objects don't show
         gameObject.GetComponent<MeshRenderer>().enabled = false;
         gameObject.GetComponentInChildren<MeshRenderer>().enabled = false;
+
         //StartCoroutine(FadeOut());
         StartCoroutine(FadeIn());
-    }
-
-    /// <summary>
-    /// Returns true if the object is within the acceptable threshold on all axes, false otherwise
-    /// </summary>
-    /// <returns></returns>
-    private bool WithinThreshold() {
-
-        // if any of the axis need to be checked, assign them, else assign the answer (also checks if the rotation is greater than 180 to normalize it. DON'T LOOK AT IT)
-        //if (xCheck && from.x >= 180f)
-        //{
-        //    from.x -= 360f;
-        //    if (from.x >= 180f)
-        //    {
-        //        from.x -= 180f;
-        //    }
-        //}
-        //if (yCheck && from.y >= 180f)
-        //{
-        //    from.y -= 360f;
-        //    if (from.y >= 180f)
-        //    {
-        //        from.y -= 180f;
-        //    }
-        //}
-        //if (zCheck && from.z >= 180f)
-        //{
-        //    from.z -= 360f;
-        //    if (from.z >= 180f)
-        //    {
-        //        from.z -= 180f;
-        //    }
-        //}
-
-        Vector3 from = new Vector3(xCheck ? (gameObject.transform.localRotation.eulerAngles.x) : 0.1f, yCheck ? (gameObject.transform.localRotation.eulerAngles.y) : 0.1f, zCheck ? (gameObject.transform.localRotation.eulerAngles.z) : 0.1f);
-
-        Vector3 to = new Vector3(xCheck ? snapAnswer.x : 0.1f, yCheck ? snapAnswer.y : 0.1f, zCheck ? snapAnswer.z : 0.1f);
-        
-        bool xWithin = true, yWithin = true, zWithin = true;
-        // check if we're in the threshold
-        if (xCheck)
-         {
-            Debug.Log("X from to: " + from.x + " " + (to.x + snapThreshold));
-            if (from.x > to.x + snapThreshold || from.x < to.x - snapThreshold)
-            {
-                xWithin = false;
-            }
-        }
-        if (yCheck)
-        {
-            Debug.Log("Y from to: " + from.y + " " + (to.y + snapThreshold));
-
-            if (from.y > to.y + snapThreshold || from.y < to.y - snapThreshold)
-            {
-                yWithin = false;
-            }
-        }
-        if (zCheck)
-        {
-            Debug.Log("Z from to: " + from.z + " " + (to.z + snapThreshold));
-
-            if (from.z > to.z + snapThreshold || from.z < to.z - snapThreshold)
-            {
-                zWithin = false;
-            }
-        }
-
-
-        //if (Mathf.Abs(Vector3.Angle(from, to)) <= snapThreshold) {
-        //    return true;
-        //}
-
-        Debug.Log("xcheck:" + xWithin);
-        Debug.Log("xcheck:" + yWithin);
-        Debug.Log("xcheck:" + zWithin);
-        return xWithin && yWithin && zWithin;
-
     }
 
     /// <summary>
@@ -307,6 +187,7 @@ public class Draggable : MonoBehaviour {
         }
         StartCoroutine(Wait(0.001f));
     }
+	//TODO just add another collider my dude
 
     /// <summary>
     /// Helper coroutine to wait a certain amount of time
@@ -330,8 +211,8 @@ public class Draggable : MonoBehaviour {
              && gameObject.transform.position.y <= (receptacle.transform.position.y + receptacle.GetComponent<BoxCollider>().size.y / 2)
              && gameObject.transform.position.y >= (receptacle.transform.position.y - receptacle.GetComponent<BoxCollider>().size.y / 2)) {
             //is it within the threshold
-            if (WithinThreshold())
-                return true;
+			//receptacle.GetComponent<BoxCollider>().bounds.Contains(new Vector3(thresholdCollider.bounds.extents.x, thresholdCollider.bounds.extents.y, receptacle.GetComponent<BoxCollider>().bounds.extents.z))
+			return thresholdCollider.bounds.Intersects(receptacle.GetComponent<BoxCollider> ().bounds);
         }
 
         // the object is not in the receptacle
