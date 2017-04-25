@@ -6,8 +6,9 @@ using UnityEngine;
 
 public class Draggable : MonoBehaviour {
 
-	[SerializeField]
-	private BoxCollider thresholdCollider;
+    [SerializeField]
+    [Tooltip("Length of the axis to be checked (longer is more difficult for the player), 0 if you don't care about that axis")]
+    private Vector3 directionCheck;
 
     [SerializeField]
     [Tooltip("Sound effect for the draggable object")]
@@ -55,7 +56,7 @@ public class Draggable : MonoBehaviour {
             Vector3 input = new Vector3(Input.GetAxis("Vertical"), Input.GetAxis("Horizontal"), Input.GetAxis("Diagonal"));
 
             //rotate about the x
-			if (input.x > 0){
+            if (input.x > 0) {
                 transform.Rotate(new Vector3(1, 0, 0), rotateSpeed);
             }
             else if (input.x < 0) {
@@ -77,7 +78,7 @@ public class Draggable : MonoBehaviour {
             else if (input.z < 0) {
                 transform.Rotate(new Vector3(0, 0, 1), -rotateSpeed);
             }
-      	}
+        }
     }
 
 
@@ -104,6 +105,8 @@ public class Draggable : MonoBehaviour {
 
             Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);
             transform.position = curPosition;
+
+            WithinThreshold();
         }
     }
 
@@ -187,7 +190,7 @@ public class Draggable : MonoBehaviour {
         }
         StartCoroutine(Wait(0.001f));
     }
-	//TODO just add another collider my dude
+    //TODO just add another collider my dude
 
     /// <summary>
     /// Helper coroutine to wait a certain amount of time
@@ -204,18 +207,73 @@ public class Draggable : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     private bool ReceptacleContains() {
-       // Debug.Log("In receptable contains");
+        // Debug.Log("In receptable contains");
         //check the x
         if (gameObject.transform.position.x <= (receptacle.transform.position.x + receptacle.GetComponent<BoxCollider>().size.x / 2)
              && gameObject.transform.position.x >= (receptacle.transform.position.x - receptacle.GetComponent<BoxCollider>().size.x / 2)
              && gameObject.transform.position.y <= (receptacle.transform.position.y + receptacle.GetComponent<BoxCollider>().size.y / 2)
              && gameObject.transform.position.y >= (receptacle.transform.position.y - receptacle.GetComponent<BoxCollider>().size.y / 2)) {
             //is it within the threshold
-			//receptacle.GetComponent<BoxCollider>().bounds.Contains(new Vector3(thresholdCollider.bounds.extents.x, thresholdCollider.bounds.extents.y, receptacle.GetComponent<BoxCollider>().bounds.extents.z))
-			return thresholdCollider.bounds.Intersects(receptacle.GetComponent<BoxCollider> ().bounds);
+            //receptacle.GetComponent<BoxCollider>().bounds.Contains(new Vector3(thresholdCollider.bounds.extents.x, thresholdCollider.bounds.extents.y, receptacle.GetComponent<BoxCollider>().bounds.extents.z))
+
+            // figure out where the collider is facing, and how far it extends
+
+            return WithinThreshold();
         }
 
         // the object is not in the receptacle
         return false;
+    }
+
+    bool WithinThreshold() {
+        bool within = true;
+
+        if (directionCheck.x > 0) {
+            // get the rotation of the object and then the length of the threshold check (in that direction)
+            Vector3 offset = transform.right.normalized * directionCheck.x;
+
+            //get the ends of the collider
+            Vector3 posX = transform.position + offset;
+            Vector3 negX = transform.position - offset;
+
+            Debug.DrawLine(transform.position, posX, Color.red);
+            Debug.DrawLine(transform.position, negX, Color.red);
+            if (!(receptacle.GetComponent<BoxCollider>().bounds.Contains(new Vector3(receptacle.transform.position.x, posX.y, posX.z))
+                && receptacle.GetComponent<BoxCollider>().bounds.Contains(new Vector3(receptacle.transform.position.x, negX.y, negX.z)))) {
+                return false;
+            }
+        }
+        if (within && directionCheck.y > 0) {
+            // get the rotation of the object and then the length of the threshold check (in that direction)
+            Vector3 offset = transform.up.normalized * directionCheck.y;
+
+            //get the ends of the collider
+            Vector3 posY = transform.position + offset;
+            Vector3 negY = transform.position - offset;
+
+            Debug.DrawLine(transform.position, negY, Color.green);
+            Debug.DrawLine(transform.position, posY, Color.green);
+            if (!(receptacle.GetComponent<BoxCollider>().bounds.Contains(new Vector3(posY.x, receptacle.transform.position.y, posY.z))
+                && receptacle.GetComponent<BoxCollider>().bounds.Contains(new Vector3(posY.x, receptacle.transform.position.y, negY.z)))) {
+                return false;
+            }
+        }
+        if (within && directionCheck.z > 0) {
+            // get the rotation of the object and then the length of the threshold check (in that direction)
+            Vector3 offset = transform.forward.normalized * directionCheck.z;
+
+            //get the ends of the collider
+            Vector3 posZ = transform.position + offset;
+            Vector3 negZ = transform.position - offset;
+
+            Debug.DrawLine(transform.position, negZ, Color.blue);
+            Debug.DrawLine(transform.position, posZ, Color.blue);
+            if (!(receptacle.GetComponent<BoxCollider>().bounds.Contains(new Vector3(posZ.x, posZ.y, receptacle.transform.position.z))
+                && receptacle.GetComponent<BoxCollider>().bounds.Contains(new Vector3(posZ.x, negZ.y, receptacle.transform.position.z)))) {
+                return false;
+            }
+        }
+
+        return within;
     }
 }
