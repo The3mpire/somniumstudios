@@ -24,7 +24,8 @@ public class NPCFollow : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		target = followObj.GetComponent<Transform> ();
+        if(followObj)
+		    target = followObj.GetComponent<Transform> ();
 		sr = gameObject.GetComponent<SpriteRenderer> ();
 
 		xSpeed = moveSpeed;
@@ -36,46 +37,42 @@ public class NPCFollow : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		// fully rotate
-//		gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation,
-//			Quaternion.LookRotation(target.position - gameObject.transform.position), rotSpeed*Time.deltaTime);
+        // fully rotate
+        //		gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation,
+        //			Quaternion.LookRotation(target.position - gameObject.transform.position), rotSpeed*Time.deltaTime);
 
-		//move towards the player
-//		gameObject.transform.position += gameObject.transform.forward * moveSpeed * Time.deltaTime;
+        //move towards the player
+        //		gameObject.transform.position += gameObject.transform.forward * moveSpeed * Time.deltaTime;
 
-		// face the player
+        // face the player
+        if (followObj) {
+            //move towards the player
+            if (Vector3.Distance(transform.position, target.position) > 2f) {
+                //move if distance from target is greater than 1
 
-		//move towards the player
-		if (Vector3.Distance(transform.position,target.position)>2f){
-			//move if distance from target is greater than 1
+                if ((transform.position.x > target.position.x + buffer) || (transform.position.x < target.position.x - buffer)) {
+                    if ((xSpeed > 0) && transform.position.x > target.position.x) {
+                        xSpeed *= -1;
+                        sr.flipX = false;
+                    }
+                    else if ((xSpeed < 0) && transform.position.x < target.position.x) {
+                        xSpeed *= -1;
+                        sr.flipX = true;
+                    }
+                    transform.position += transform.right * xSpeed * Time.deltaTime;
+                }
 
-			if ((transform.position.x > target.position.x + buffer) || (transform.position.x < target.position.x - buffer)) 
-			{
-				if ((xSpeed > 0) && transform.position.x > target.position.x) 
-				{
-					xSpeed *= -1;
-					sr.flipX = false;
-				} 
-				else if ((xSpeed < 0) && transform.position.x < target.position.x) 
-				{
-					xSpeed *= -1;
-					sr.flipX = true;
-				}
-				transform.position += transform.right * xSpeed * Time.deltaTime;
-			}
-
-			if ((transform.position.z > target.position.z + buffer) || (transform.position.z < target.position.z - buffer)) 
-			{
-				if ((zSpeed > 0) && transform.position.z > target.position.z) 
-				{
-					zSpeed *= -1;
-				} else if ((zSpeed < 0) && transform.position.z < target.position.z) 
-				{
-					zSpeed *= -1;
-				}
-				transform.position += transform.forward * zSpeed * Time.deltaTime;
-			}
-		}
+                if ((transform.position.z > target.position.z + buffer) || (transform.position.z < target.position.z - buffer)) {
+                    if ((zSpeed > 0) && transform.position.z > target.position.z) {
+                        zSpeed *= -1;
+                    }
+                    else if ((zSpeed < 0) && transform.position.z < target.position.z) {
+                        zSpeed *= -1;
+                    }
+                    transform.position += transform.forward * zSpeed * Time.deltaTime;
+                }
+            }
+        }
 
 	}
 }
