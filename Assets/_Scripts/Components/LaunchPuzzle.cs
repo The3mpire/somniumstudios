@@ -22,6 +22,11 @@ namespace Somnium {
             }
         }
 
+        private void OnDisable()
+        {
+            DialogManager.Instance.ChoiceSelectedEvent -= Interact;
+        }
+
         /// <summary>
         /// 
         /// </summary>
