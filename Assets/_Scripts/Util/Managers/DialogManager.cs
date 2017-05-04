@@ -384,9 +384,12 @@ namespace Somnium
         private void ChoiceSelectionListener(Choice c)
         {
             Dialog d = c.NextDialog;
-            string flag = c.Flag;
-            int value = c.Value;
-            state.SetFlag(flag, value);
+            if (c.Flag != null)
+            {
+                string flag = c.Flag;
+                int value = c.Value;
+                state.SetFlag(flag, value);
+            }
             if (d != null)
             {
                 dialogQueue.Enqueue(d);

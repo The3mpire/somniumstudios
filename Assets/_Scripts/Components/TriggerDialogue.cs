@@ -19,7 +19,7 @@ namespace Somnium
         private Sprite profileSprite;
 
         [SerializeField]
-        private bool Repeatable;
+        private bool repeatable;
 
         void OnTriggerEnter()
         {
@@ -34,7 +34,7 @@ namespace Somnium
                 {
                     DialogManager.Instance.ProfileSprite = profileSprite;
                     DialogManager.Instance.StartDialog(dialogFilePath);
-                    this.gameObject.SetActive(Repeatable);
+                    this.gameObject.SetActive(repeatable);
 
                 }
             }
@@ -51,7 +51,7 @@ namespace Somnium
                     }
                     else
                     {
-                        this.gameObject.SetActive(Repeatable);
+                        this.gameObject.SetActive(repeatable);
                     }
                 }
             }

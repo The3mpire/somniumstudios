@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Somnium
 {
-    public class StartDialogOnInteract : MonoBehaviour, IInteractable
+    [RequireComponent(typeof(Collider))]
+    public class TriggerDialogueOnEnter : MonoBehaviour
     {
         [SerializeField]
         private string dialogFilePath;
@@ -18,12 +18,16 @@ namespace Somnium
 
         private bool triggered;
 
-        public void Interact()
+        private void Start()
+        {
+            GetComponent<Collider>().isTrigger = true;
+        }
+
+        void OnTriggerEnter()
         {
             if(!triggered || (triggered && repeatable))
             {
                 triggered = true;
-                Cursor.visible = true;
                 DialogManager.Instance.ProfileSprite = profileSprite;
                 DialogManager.Instance.StartDialog(dialogFilePath);
             }
