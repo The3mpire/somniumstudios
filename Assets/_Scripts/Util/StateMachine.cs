@@ -97,7 +97,11 @@ namespace Somnium
         /// </summary>
         public int GetFlag(string flagName)
         {
-            return flags[flagName];
+            if (flags.ContainsKey(flagName))
+            {
+                return flags[flagName];
+            }
+            return 0;
         }
 
 

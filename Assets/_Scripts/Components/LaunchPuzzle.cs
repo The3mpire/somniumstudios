@@ -11,7 +11,7 @@ namespace Somnium {
         [SerializeField]
         private GameObject player;
 
-        private void Start() {
+        private void OnEnable() {
             DialogManager.Instance.ChoiceSelectedEvent += Interact;
         }
 
@@ -20,6 +20,11 @@ namespace Somnium {
             if (choice == 1 ) {
                 StartCoroutine(WaitForDialog());
             }
+        }
+
+        private void OnDisable()
+        {
+            DialogManager.Instance.ChoiceSelectedEvent -= Interact;
         }
 
         /// <summary>

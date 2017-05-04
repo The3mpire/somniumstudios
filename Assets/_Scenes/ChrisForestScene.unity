@@ -1527,6 +1527,17 @@ MonoBehaviour:
   dialogFilePath: DialogFiles/DragonForestScene
   profileSprite: {fileID: 21300000, guid: db30978009758344b861c85602e3fb50, type: 3}
   repeatable: 0
+--- !u!114 &1678849860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1678849853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80225ebadd3e3994e94ef09dbb50aaec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1706355083
 Prefab:
   m_ObjectHideFlags: 0
@@ -1731,6 +1742,10 @@ Prefab:
         type: 2}
       propertyPath: interactableLayer.m_Bits
       value: 18432
+      objectReference: {fileID: 0}
+    - target: {fileID: 1445686002333452, guid: 4491efba35a82eb46b36bf3208ebf732, type: 2}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4491efba35a82eb46b36bf3208ebf732, type: 2}

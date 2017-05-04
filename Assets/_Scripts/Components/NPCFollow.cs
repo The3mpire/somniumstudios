@@ -22,6 +22,19 @@ public class NPCFollow : MonoBehaviour {
 	private int zSpeed;
 	private float buffer;
 
+    public GameObject FollowObj
+    {
+        get
+        {
+            return followObj;
+        }
+        set
+        {
+            this.target = value.transform;
+            this.followObj = value;
+        }
+    }
+
 	// Use this for initialization
 	void Start () {
         if(followObj)
