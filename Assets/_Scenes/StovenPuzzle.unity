@@ -219,11 +219,14 @@ MonoBehaviour:
   sfx: {fileID: 8300000, guid: 4e9ce89d9e841d149bdc21d022db4d88, type: 3}
   isDraggable: 1
   hasInterruptor: 0
+  hasPredecessor: 0
+  isPredecessor: 0
+  hasReceptacle: 1
   receptacle: {fileID: 351857548}
+  predecessor: {fileID: 0}
   interruptor: {fileID: 0}
   fadeTime: 0
-  hasReceptacle: 1
-  rotateSpeed: 10
+  rotateSpeed: 0.5
 --- !u!33 &37052166
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -482,6 +485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03228eb27baf8364c9405333277df75a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOpener: 0
 --- !u!61 &287810205
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -994,11 +998,14 @@ MonoBehaviour:
   sfx: {fileID: 8300000, guid: 4e9ce89d9e841d149bdc21d022db4d88, type: 3}
   isDraggable: 1
   hasInterruptor: 0
+  hasPredecessor: 0
+  isPredecessor: 0
+  hasReceptacle: 1
   receptacle: {fileID: 1558473875}
+  predecessor: {fileID: 0}
   interruptor: {fileID: 0}
   fadeTime: 0.1
-  hasReceptacle: 1
-  rotateSpeed: 5
+  rotateSpeed: 0.5
 --- !u!1001 &831311707
 Prefab:
   m_ObjectHideFlags: 0
@@ -1942,11 +1949,14 @@ MonoBehaviour:
   sfx: {fileID: 8300000, guid: 4e9ce89d9e841d149bdc21d022db4d88, type: 3}
   isDraggable: 1
   hasInterruptor: 1
+  hasPredecessor: 0
+  isPredecessor: 0
+  hasReceptacle: 1
   receptacle: {fileID: 1187570814}
+  predecessor: {fileID: 0}
   interruptor: {fileID: 287810201}
   fadeTime: 0
-  hasReceptacle: 1
-  rotateSpeed: 8
+  rotateSpeed: 0.5
 --- !u!95 &1198268207
 Animator:
   serializedVersion: 3
@@ -2110,10 +2120,13 @@ MonoBehaviour:
   sfx: {fileID: 0}
   isDraggable: 1
   hasInterruptor: 0
+  hasPredecessor: 0
+  isPredecessor: 0
+  hasReceptacle: 0
   receptacle: {fileID: 0}
+  predecessor: {fileID: 0}
   interruptor: {fileID: 0}
   fadeTime: 0
-  hasReceptacle: 0
   rotateSpeed: 10
 --- !u!4 &1346130179 stripped
 Transform:
@@ -2308,11 +2321,14 @@ MonoBehaviour:
   sfx: {fileID: 8300000, guid: 4e9ce89d9e841d149bdc21d022db4d88, type: 3}
   isDraggable: 1
   hasInterruptor: 0
+  hasPredecessor: 0
+  isPredecessor: 0
+  hasReceptacle: 1
   receptacle: {fileID: 1414726825}
+  predecessor: {fileID: 0}
   interruptor: {fileID: 0}
   fadeTime: 0
-  hasReceptacle: 1
-  rotateSpeed: 10
+  rotateSpeed: 0.5
 --- !u!33 &1392585464
 MeshFilter:
   m_ObjectHideFlags: 0

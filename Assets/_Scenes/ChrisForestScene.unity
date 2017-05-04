@@ -100,6 +100,7 @@ GameObject:
   m_Component:
   - component: {fileID: 124601010}
   - component: {fileID: 124601009}
+  - component: {fileID: 124601011}
   m_Layer: 0
   m_Name: policeTape (4)
   m_TagString: Untagged
@@ -155,6 +156,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 6.1280003, z: 0}
+--- !u!65 &124601011
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 124601008}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10.23, y: 7.28, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &131950301
 Prefab:
   m_ObjectHideFlags: 0
@@ -569,6 +582,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1049556022}
   - component: {fileID: 1049556021}
+  - component: {fileID: 1049556023}
   m_Layer: 0
   m_Name: policeTape (2)
   m_TagString: Untagged
@@ -624,6 +638,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: -44.467003, z: 0}
+--- !u!65 &1049556023
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1049556020}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10.2300005, y: 7.28, z: 0.20000003}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1078822068
 GameObject:
   m_ObjectHideFlags: 0
@@ -689,6 +715,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1204718544}
   - component: {fileID: 1204718543}
+  - component: {fileID: 1204718545}
   m_Layer: 0
   m_Name: policeTape (3)
   m_TagString: Untagged
@@ -744,6 +771,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1204718545
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1204718542}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10.23, y: 7.28, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1224777085
 GameObject:
   m_ObjectHideFlags: 0
@@ -855,6 +894,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1361798466}
   - component: {fileID: 1361798465}
+  - component: {fileID: 1361798467}
   m_Layer: 0
   m_Name: policeTape (1)
   m_TagString: Untagged
@@ -910,6 +950,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 72.593, z: 0}
+--- !u!65 &1361798467
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1361798464}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10.23, y: 7.28, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1364185745
 Prefab:
   m_ObjectHideFlags: 0
@@ -1008,6 +1060,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1449869282}
   - component: {fileID: 1449869281}
+  - component: {fileID: 1449869283}
   m_Layer: 0
   m_Name: policeTape
   m_TagString: Untagged
@@ -1063,6 +1116,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1449869283
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1449869280}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10.23, y: 7.28, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1491217898
 Prefab:
   m_ObjectHideFlags: 0
