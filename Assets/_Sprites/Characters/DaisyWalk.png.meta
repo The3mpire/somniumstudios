@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 0abdd4b6b61f6384ea473b4a46d2c4be
-timeCreated: 1493867284
+guid: 3afbf9e2cc557a642908463873bc863c
+timeCreated: 1493869612
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -78,9 +78,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 1273
+        y: 101
         width: 850
-        height: 1079
+        height: 1075
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -91,9 +91,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 850
-        y: 1273
+        y: 101
         width: 850
-        height: 1079
+        height: 1075
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -103,10 +103,10 @@ TextureImporter:
       name: DaisyWalk_2
       rect:
         serializedVersion: 2
-        x: 0
-        y: 117
+        x: 1700
+        y: 101
         width: 850
-        height: 1079
+        height: 1075
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -116,10 +116,10 @@ TextureImporter:
       name: DaisyWalk_3
       rect:
         serializedVersion: 2
-        x: 850
-        y: 110
+        x: 2550
+        y: 101
         width: 850
-        height: 1079
+        height: 1075
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

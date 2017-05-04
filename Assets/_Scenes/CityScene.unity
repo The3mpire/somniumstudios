@@ -4443,27 +4443,25 @@ GameObject:
   - component: {fileID: 951279070}
   - component: {fileID: 951279069}
   - component: {fileID: 951279068}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Daisy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!61 &951279068
-BoxCollider2D:
+--- !u!65 &951279068
+BoxCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 951279067}
-  m_Enabled: 1
-  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_Offset: {x: -0.06486892, y: -0.57122386}
+  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.3308783, y: 9.567564}
+  m_Size: {x: 3.4062731, y: 9.469762, z: 1.2956012}
+  m_Center: {x: -0.10930061, y: -0.6201196, z: -0.056164265}
 --- !u!95 &951279069
 Animator:
   serializedVersion: 3
@@ -4510,7 +4508,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
+  m_SortingLayerID: -578679337
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 69296d3dd9d98604e8c461ba6b24371a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4523,8 +4521,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 951279067}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -18.74, y: 4.61, z: 5.86}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalPosition: {x: -18.74, y: 5.12, z: 1.93}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -8614,7 +8612,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1847025130}
   - component: {fileID: 1847025129}
-  m_Layer: 0
+  - component: {fileID: 1847025131}
+  m_Layer: 14
   m_Name: DaisyDeath
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8650,7 +8649,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
+  m_SortingLayerID: -578679337
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300002, guid: 60bb2a019054abf47b65c0c9f6302abb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -8663,12 +8662,24 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1847025128}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.12, y: 4.1, z: 5.59}
-  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_LocalPosition: {x: -15.12, y: 4.1, z: 1.66}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1847025131
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1847025128}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 17.8899, y: 10.37, z: 1.2559602}
+  m_Center: {x: -0.3475113, y: 0, z: -0.11611748}
 --- !u!1001 &1851344046
 Prefab:
   m_ObjectHideFlags: 0
