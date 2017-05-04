@@ -7,9 +7,17 @@ public class Interruptor : MonoBehaviour {
     private bool light = false;
     private bool clickable = true;
 
+    [SerializeField]
+    private bool isOpener = false;
+
 	// Use this for initialization
 	void Start () {
-        gameObject.GetComponent<SpriteRenderer>().color = new Color32(0xFF, 0xFF, 0xFF, 0xFF);
+        if (isOpener) {
+            gameObject.GetComponent<SpriteRenderer>().color = new Color32(0xFF, 0xFF, 0xFF, 0x00);
+        }
+        else {
+            gameObject.GetComponent<SpriteRenderer>().color = new Color32(0xFF, 0xFF, 0xFF, 0xFF);
+        }
     }
 
     // Update is called once per frame
@@ -18,7 +26,7 @@ public class Interruptor : MonoBehaviour {
 	}
 
     void OnMouseDown() {
-        if (clickable) {
+        if (clickable && !isOpener) {
             if (light) {
                 gameObject.GetComponent<SpriteRenderer>().color = new Color32(0xFF, 0xFF, 0xFF, 0xFF);
                 light = false;
@@ -27,6 +35,10 @@ public class Interruptor : MonoBehaviour {
                 gameObject.GetComponent<SpriteRenderer>().color = new Color32(0xFF, 0xFF, 0xFF, 0x5C);
                 light = true;
             }
+        }
+        else if(clickable && isOpener) {
+            gameObject.GetComponent<SpriteRenderer>().color = new Color32(0xFF, 0xFF, 0xFF, 0xFF);
+            light = true;
         }
     }
 

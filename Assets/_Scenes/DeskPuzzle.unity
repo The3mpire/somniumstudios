@@ -177,8 +177,8 @@ GameObject:
   m_Component:
   - component: {fileID: 26116348}
   - component: {fileID: 26116347}
-  - component: {fileID: 26116350}
   - component: {fileID: 26116349}
+  - component: {fileID: 26116350}
   m_Layer: 0
   m_Name: 2DDrawerOpen
   m_TagString: Untagged
@@ -259,6 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03228eb27baf8364c9405333277df75a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOpener: 1
 --- !u!1 &135292055 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: ae2dc42380f1cd04f971771e28686bda, type: 3}
