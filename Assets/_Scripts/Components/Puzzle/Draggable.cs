@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MeshCollider))]
-
 public class Draggable : MonoBehaviour {
 
     [SerializeField]
@@ -25,8 +23,24 @@ public class Draggable : MonoBehaviour {
     private bool hasInterruptor = false;
 
     [SerializeField]
+    [Tooltip("If this object has an object that must be placed before it can be placed")]
+    private bool hasPredecessor = false;
+
+    [SerializeField]
+    [Tooltip("If this object is a predecessor")]
+    private bool isPredecessor = false;
+
+    [SerializeField]
+    [Tooltip("If this goes into the puzzle")]
+    private bool hasReceptacle = true;
+
+    [SerializeField]
     [Tooltip("The receptacle object for this draggable object")]
     private GameObject receptacle;
+
+    [SerializeField]
+    [Tooltip("The receptacle object that this draggable depends on")]
+    private GameObject predecessor;
 
     [SerializeField]
     [Tooltip("The interruptor object if this draggable has one")]
@@ -42,10 +56,16 @@ public class Draggable : MonoBehaviour {
     private bool isClicked;
 
     [SerializeField]
-    private bool hasReceptacle;
+    private float rotateSpeed = 8;
 
-    [SerializeField]
-    private float rotateSpeed = 10;
+    /// <summary>
+    /// Add the predecessor the puzzle manager
+    /// </summary>
+    void Awake() {
+        if (isPredecessor) {
+            PuzzleManager.setPredecessor(gameObject, false);
+        }
+    }
 
     /// <summary>
     /// Rotate
@@ -120,7 +140,16 @@ public class Draggable : MonoBehaviour {
         isClicked = false;
         gameObject.GetComponent<Rigidbody>().isKinematic = false;
 
-        if (hasReceptacle && ReceptacleContains()/*receptacle.GetComponent<BoxCollider>().bounds.Contains(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, 0f))*/) {
+        // if their predecessor isn't placed, get outta that bitch
+        if (hasPredecessor) {
+            if (!PuzzleManager.isPredecessorPlaced(predecessor)) {
+                return;
+            }
+        }
+
+        /*receptacle.GetComponent<BoxCollider>().bounds.Contains(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, 0f))*/
+        if (hasReceptacle && WithinThreshold()) {
+            
             if (hasInterruptor) {
                 if (interruptor.GetComponent<Interruptor>().getLight())
                     Snap();
@@ -150,31 +179,36 @@ public class Draggable : MonoBehaviour {
             interruptor.GetComponent<Interruptor>().setClickable(false);
 
         // Disable the colliders so it is no longer clickable
-        GetComponent<MeshCollider>().enabled = false;
+
         receptacle.GetComponent<BoxCollider>().enabled = false;
 
         PuzzleManager.incrementPiecesPlaced();
 
-        // Disable Renderers so the 3D objects don't show
-        gameObject.GetComponent<MeshRenderer>().enabled = false;
-        gameObject.GetComponentInChildren<MeshRenderer>().enabled = false;
+        if (isPredecessor) {
+            PuzzleManager.setPredecessor(gameObject, true);
+        }
 
-        //StartCoroutine(FadeOut());
+        // Disable Renderers so the 3D objects don't show
+        //gameObject.GetComponent<Renderer>().enabled = false;
+        //gameObject.GetComponentInChildren<Renderer>().enabled = false;
         StartCoroutine(FadeIn());
+        StartCoroutine(FadeOut());
+
     }
 
-    /// <summary>
-    /// Fade out the alpha channel of the draggable object
-    /// </summary>
-    /// <returns></returns>
+    ///// <summary>
+    ///// Fade out the alpha channel of the draggable object
+    ///// </summary>
+    ///// <returns></returns>
     public IEnumerator FadeOut() {
-        itemColor = gameObject.GetComponent<MeshRenderer>().material.color;
-        while (itemColor.a > 0) {
-            itemColor.a -= 0.01f;
-            gameObject.GetComponent<MeshRenderer>().material.color = itemColor;
-            yield return new WaitForSeconds(fadeTime);
-        }
-        gameObject.SetActive(false);
+
+        Renderer parentRend = GetComponent<Renderer>();
+        if (parentRend)
+            parentRend.enabled = false;
+        foreach (Renderer r in GetComponentsInChildren<Renderer>())
+            r.enabled = false;
+
+        yield return null;
     }
 
     /// <summary>
@@ -189,8 +223,9 @@ public class Draggable : MonoBehaviour {
             yield return new WaitForSeconds(fadeTime);
         }
         StartCoroutine(Wait(0.001f));
+        gameObject.SetActive(false);
+
     }
-    //TODO just add another collider my dude
 
     /// <summary>
     /// Helper coroutine to wait a certain amount of time
@@ -202,28 +237,28 @@ public class Draggable : MonoBehaviour {
         gameObject.SetActive(false);
     }
 
-    /// <summary>
-    /// Determines whether the object is within the receptacle x & y (DOES NOT CHECK Z)
-    /// </summary>
-    /// <returns></returns>
-    private bool ReceptacleContains() {
-        // Debug.Log("In receptable contains");
-        //check the x
-        if (gameObject.transform.position.x <= (receptacle.transform.position.x + receptacle.GetComponent<BoxCollider>().size.x / 2)
-             && gameObject.transform.position.x >= (receptacle.transform.position.x - receptacle.GetComponent<BoxCollider>().size.x / 2)
-             && gameObject.transform.position.y <= (receptacle.transform.position.y + receptacle.GetComponent<BoxCollider>().size.y / 2)
-             && gameObject.transform.position.y >= (receptacle.transform.position.y - receptacle.GetComponent<BoxCollider>().size.y / 2)) {
-            //is it within the threshold
-            //receptacle.GetComponent<BoxCollider>().bounds.Contains(new Vector3(thresholdCollider.bounds.extents.x, thresholdCollider.bounds.extents.y, receptacle.GetComponent<BoxCollider>().bounds.extents.z))
+    ///// <summary>
+    ///// Determines whether the object is within the receptacle x & y (DOES NOT CHECK Z)
+    ///// </summary>
+    ///// <returns></returns>
+    ////private bool ReceptacleContains() {
+    //     Debug.Log("In receptable contains");
+    //    //check the x
+    //    //if (gameObject.transform.position.x <= (receptacle.transform.position.x + receptacle.GetComponent<BoxCollider>().size.x / 2)
+    //    //     && gameObject.transform.position.x >= (receptacle.transform.position.x - receptacle.GetComponent<BoxCollider>().size.x / 2)
+    //    //     && gameObject.transform.position.y <= (receptacle.transform.position.y + receptacle.GetComponent<BoxCollider>().size.y / 2)
+    //    //     && gameObject.transform.position.y >= (receptacle.transform.position.y - receptacle.GetComponent<BoxCollider>().size.y / 2)) {
+    //        //is it within the threshold
+    //        //receptacle.GetComponent<BoxCollider>().bounds.Contains(new Vector3(thresholdCollider.bounds.extents.x, thresholdCollider.bounds.extents.y, receptacle.GetComponent<BoxCollider>().bounds.extents.z))
 
-            // figure out where the collider is facing, and how far it extends
+    //        // figure out where the collider is facing, and how far it extends
 
-            return WithinThreshold();
-        }
+    //       // return WithinThreshold();
+    //  //  }
 
-        // the object is not in the receptacle
-        return false;
-    }
+    //    // the object is not in the receptacle
+    //    //return false;
+    //}
 
     bool WithinThreshold() {
         bool within = true;

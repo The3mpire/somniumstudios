@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interruptor : MonoBehaviour {
+public class Opener : MonoBehaviour {
 
     private bool light = false;
     private bool clickable = true;
+    private Color32 origColor;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start() {
         gameObject.GetComponent<SpriteRenderer>().color = new Color32(0xFF, 0xFF, 0xFF, 0xFF);
     }
 
     // Update is called once per frame
-    void Update () {
-		
-	}
+    void Update() {
+
+    }
 
     void OnMouseDown() {
         if (clickable) {
@@ -40,3 +41,4 @@ public class Interruptor : MonoBehaviour {
     }
 
 }
+

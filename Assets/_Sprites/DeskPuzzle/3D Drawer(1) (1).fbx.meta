@@ -1,56 +1,15 @@
 fileFormatVersion: 2
-guid: 7c70c2df15975774e91dead1a5956a3f
-timeCreated: 1491411061
+guid: 0d61f36a520c78a45ab7ccd988b2f563
+timeCreated: 1493858526
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: //RootNode
-    100002: pCylinder16
-    100004: polySurface1
-    100006: polySurface2
-    100008: polySurface2 1
-    100010: polySurface3
-    100012: polySurface4
-    100014: polySurface5
-    100016: polySurface6
-    100018: polySurface7
-    100020: polySurface8
-    100022: polySurface9
-    100024: transform1
-    100026: transform2
-    100028: transform3
-    100030: transform4
-    100032: transform5
-    100034: transform6
-    100036: transform7
-    100038: transform8
-    100040: transform9
     400000: //RootNode
-    400002: pCylinder16
-    400004: polySurface1
-    400006: polySurface2
-    400008: polySurface2 1
-    400010: polySurface3
-    400012: polySurface4
-    400014: polySurface5
-    400016: polySurface6
-    400018: polySurface7
-    400020: polySurface8
-    400022: polySurface9
-    400024: transform1
-    400026: transform2
-    400028: transform3
-    400030: transform4
-    400032: transform5
-    400034: transform6
-    400036: transform7
-    400038: transform8
-    400040: transform9
-    2300000: polySurface2
-    3300000: polySurface2
-    4300000: polySurface2
-    6400000: polySurface2
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: pCube51
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -78,7 +37,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0

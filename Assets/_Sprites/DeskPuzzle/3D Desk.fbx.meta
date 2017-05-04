@@ -1,17 +1,101 @@
 fileFormatVersion: 2
-guid: 99693582edb8746a0b00b656078e96f4
-timeCreated: 1492050329
-licenseType: Pro
+guid: ba6654ca1fcf1964ba966ebff2505039
+timeCreated: 1493858886
+licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: //RootNode
+    100002: pCube1
+    100004: pCube11
+    100006: pCube12
+    100008: pCube16
+    100010: pCube17
+    100012: pCube18
+    100014: pCube19
+    100016: pCube2
+    100018: pCube20
+    100020: pCube22
+    100022: pCube23
+    100024: pCube24
+    100026: pCube25
+    100028: pCube3
+    100030: pCube4
+    100032: pCube5
+    100034: pCube7
+    100036: pCube8
+    100038: pCube9
+    100040: pTorus10
+    100042: pTorus2
+    100044: pTorus5
+    100046: transform1
+    100048: transform2
+    100050: transform46
+    100052: transform47
+    100054: transform48
+    100056: transform49
+    100058: transform5
+    100060: transform50
+    100062: transform51
+    100064: transform52
+    100066: transform53
+    100068: transform54
+    100070: transform55
+    100072: transform56
+    100074: transform57
+    100076: transform58
+    100078: transform59
+    100080: transform6
+    100082: transform60
+    100084: transform61
+    100086: transform62
     400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: pCube76
-    6400000: //RootNode
-    7400000: Take 001
+    400002: pCube1
+    400004: pCube11
+    400006: pCube12
+    400008: pCube16
+    400010: pCube17
+    400012: pCube18
+    400014: pCube19
+    400016: pCube2
+    400018: pCube20
+    400020: pCube22
+    400022: pCube23
+    400024: pCube24
+    400026: pCube25
+    400028: pCube3
+    400030: pCube4
+    400032: pCube5
+    400034: pCube7
+    400036: pCube8
+    400038: pCube9
+    400040: pTorus10
+    400042: pTorus2
+    400044: pTorus5
+    400046: transform1
+    400048: transform2
+    400050: transform46
+    400052: transform47
+    400054: transform48
+    400056: transform49
+    400058: transform5
+    400060: transform50
+    400062: transform51
+    400064: transform52
+    400066: transform53
+    400068: transform54
+    400070: transform55
+    400072: transform56
+    400074: transform57
+    400076: transform58
+    400078: transform59
+    400080: transform6
+    400082: transform60
+    400084: transform61
+    400086: transform62
+    2300000: pTorus10
+    3300000: pTorus10
+    4300000: pTorus10
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -39,7 +123,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0

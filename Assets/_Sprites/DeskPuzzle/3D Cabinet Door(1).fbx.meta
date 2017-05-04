@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: a7d932d460d90a6409cd6cab5dc2fd47
-timeCreated: 1491411062
+guid: 71cb4b7968e468341be70f9b3713c3d5
+timeCreated: 1493855852
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -9,8 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: pSphere11
-    6400000: //RootNode
+    4300000: pTorus4
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -38,7 +37,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
