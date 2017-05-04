@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   directionCheck: {x: 0, y: 0, z: 0.2}
-  sfx: {fileID: 8300000, guid: 4e9ce89d9e841d149bdc21d022db4d88, type: 3}
+  sfx: {fileID: 8300000, guid: c7be01fe8f5686c45b17f2837399e726, type: 3}
   isDraggable: 1
   hasInterruptor: 0
   hasPredecessor: 0
@@ -1059,7 +1059,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   directionCheck: {x: 0.6, y: 0, z: 0.2}
-  sfx: {fileID: 8300000, guid: 4e9ce89d9e841d149bdc21d022db4d88, type: 3}
+  sfx: {fileID: 8300000, guid: c7be01fe8f5686c45b17f2837399e726, type: 3}
   isDraggable: 1
   hasInterruptor: 0
   hasPredecessor: 0
@@ -2010,7 +2010,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   directionCheck: {x: 0, y: 2, z: 0}
-  sfx: {fileID: 8300000, guid: 4e9ce89d9e841d149bdc21d022db4d88, type: 3}
+  sfx: {fileID: 8300000, guid: c7be01fe8f5686c45b17f2837399e726, type: 3}
   isDraggable: 1
   hasInterruptor: 1
   hasPredecessor: 0
@@ -2382,7 +2382,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   directionCheck: {x: 0, y: 0, z: 0.2}
-  sfx: {fileID: 8300000, guid: 4e9ce89d9e841d149bdc21d022db4d88, type: 3}
+  sfx: {fileID: 8300000, guid: c7be01fe8f5686c45b17f2837399e726, type: 3}
   isDraggable: 1
   hasInterruptor: 0
   hasPredecessor: 0
