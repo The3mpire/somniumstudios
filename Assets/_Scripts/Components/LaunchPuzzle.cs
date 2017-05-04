@@ -17,7 +17,7 @@ namespace Somnium {
 
         public void Interact(int choice, object val) {
             int.TryParse(val.ToString(), out choice);
-            if (choice == 1 ) {
+            if (choice == 1) {
                 StartCoroutine(WaitForDialog());
             }
         }

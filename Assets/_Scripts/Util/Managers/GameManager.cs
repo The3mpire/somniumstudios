@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour {
     public static void ChangeScene(int levelIndex) {
         // TODO fix this awful hardcoded bullshit
         // On puzzles and the main menu, dont hid the cursor
-        if (levelIndex == 3 || levelIndex == 0)
+        if (levelIndex == 3 || levelIndex == 0 || levelIndex == 5)
         {
             Cursor.visible = true;
         }

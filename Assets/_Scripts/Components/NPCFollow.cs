@@ -16,6 +16,9 @@ public class NPCFollow : MonoBehaviour {
 	[SerializeField]
 	private int moveSpeed;
 
+    [SerializeField]
+    private bool follow;
+
 	private SpriteRenderer sr;
 	private Transform target;
 	private int xSpeed;
@@ -58,7 +61,7 @@ public class NPCFollow : MonoBehaviour {
         //		gameObject.transform.position += gameObject.transform.forward * moveSpeed * Time.deltaTime;
 
         // face the player
-        if (followObj) {
+        if (followObj && follow) {
             //move towards the player
             if (Vector3.Distance(transform.position, target.position) > 2f) {
                 //move if distance from target is greater than 1
