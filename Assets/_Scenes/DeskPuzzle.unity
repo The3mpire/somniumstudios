@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657886, g: 0.4964127, b: 0.5748172, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -276,7 +276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   directionCheck: {x: 0, y: 0, z: 2}
-  sfx: {fileID: 0}
+  sfx: {fileID: 8300000, guid: c7be01fe8f5686c45b17f2837399e726, type: 3}
   isDraggable: 1
   hasInterruptor: 0
   hasPredecessor: 0
@@ -629,7 +629,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   directionCheck: {x: 0.5, y: 0, z: 0}
-  sfx: {fileID: 0}
+  sfx: {fileID: 8300000, guid: c7be01fe8f5686c45b17f2837399e726, type: 3}
   isDraggable: 1
   hasInterruptor: 1
   hasPredecessor: 0
@@ -836,7 +836,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   directionCheck: {x: 0, y: 2, z: 0}
-  sfx: {fileID: 0}
+  sfx: {fileID: 8300000, guid: c7be01fe8f5686c45b17f2837399e726, type: 3}
   isDraggable: 1
   hasInterruptor: 0
   hasPredecessor: 1
@@ -1058,7 +1058,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: b236b8234823ef449a6f607c1556bc71, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1516,7 +1516,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   directionCheck: {x: 1, y: 0, z: 0}
-  sfx: {fileID: 0}
+  sfx: {fileID: 8300000, guid: c7be01fe8f5686c45b17f2837399e726, type: 3}
   isDraggable: 1
   hasInterruptor: 0
   hasPredecessor: 0
@@ -1996,7 +1996,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1213789132}
   - component: {fileID: 1213789131}
-  - component: {fileID: 1213789133}
   m_Layer: 2
   m_Name: Dreamer
   m_TagString: Untagged
@@ -2035,7 +2034,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 38b4cb82e052c89419623796138c5ecc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 12cd1617ee75cb142aed70a7c5aa5486, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2046,29 +2045,12 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1213789130}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.39, y: -1.77, z: 0}
+  m_LocalPosition: {x: -9.75, y: -3.04, z: -5.48}
   m_LocalScale: {x: 0.6197871, y: 0.6197871, z: 0.6197871}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &1213789133
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1213789130}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 160ae058ff6a5fa4c81162e5f29bb980, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &1217755799 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114403898599424374, guid: e4f06d40c52f1694ea4828fd9e9fdd2a,
@@ -2215,7 +2197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   directionCheck: {x: 0, y: 5, z: 3}
-  sfx: {fileID: 0}
+  sfx: {fileID: 8300000, guid: c7be01fe8f5686c45b17f2837399e726, type: 3}
   isDraggable: 1
   hasInterruptor: 0
   hasPredecessor: 0
@@ -2329,7 +2311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   directionCheck: {x: 1.5, y: 1.5, z: 5}
-  sfx: {fileID: 0}
+  sfx: {fileID: 8300000, guid: c7be01fe8f5686c45b17f2837399e726, type: 3}
   isDraggable: 1
   hasInterruptor: 0
   hasPredecessor: 0
@@ -2356,7 +2338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   directionCheck: {x: 0, y: 15, z: 4}
-  sfx: {fileID: 0}
+  sfx: {fileID: 8300000, guid: c7be01fe8f5686c45b17f2837399e726, type: 3}
   isDraggable: 1
   hasInterruptor: 0
   hasPredecessor: 0
@@ -2410,7 +2392,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   directionCheck: {x: 0, y: 2, z: 4}
-  sfx: {fileID: 0}
+  sfx: {fileID: 8300000, guid: c7be01fe8f5686c45b17f2837399e726, type: 3}
   isDraggable: 1
   hasInterruptor: 0
   hasPredecessor: 0
@@ -2536,7 +2518,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   directionCheck: {x: 0, y: 2, z: 2}
-  sfx: {fileID: 0}
+  sfx: {fileID: 8300000, guid: c7be01fe8f5686c45b17f2837399e726, type: 3}
   isDraggable: 1
   hasInterruptor: 0
   hasPredecessor: 0
@@ -3154,6 +3136,70 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.35000002, y: 0.33570692, z: 4.2303634}
   m_Center: {x: 0, y: 0.037146535, z: 0.3505563}
+--- !u!1 &1729098890
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1729098892}
+  - component: {fileID: 1729098891}
+  m_Layer: 0
+  m_Name: DragonInsideCropped
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!212 &1729098891
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1729098890}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 118532771
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: cd3b916787596ea45adc0ea11ddca755, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+--- !u!4 &1729098892
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1729098890}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.2, y: 2.3, z: 11.4}
+  m_LocalScale: {x: 28.465044, y: 16.336882, z: 16.336882}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 43
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1749800688
 Prefab:
   m_ObjectHideFlags: 0
@@ -3259,7 +3305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   directionCheck: {x: 0, y: 1, z: 2}
-  sfx: {fileID: 0}
+  sfx: {fileID: 8300000, guid: c7be01fe8f5686c45b17f2837399e726, type: 3}
   isDraggable: 1
   hasInterruptor: 0
   hasPredecessor: 1
